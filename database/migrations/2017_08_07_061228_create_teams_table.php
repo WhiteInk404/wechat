@@ -17,6 +17,7 @@ class CreateTeamsTable extends Migration
             $table->increments('id');
             $table->integer('activity_id');
             $table->string('name');
+            $table->text('description')->nullable();
             $table->integer('user_id')->comment('创建者用户 id');
             $table->timestamps();
         });

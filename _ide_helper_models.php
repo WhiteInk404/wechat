@@ -14,6 +14,7 @@ namespace App\Entities{
  *
  * @property int $id
  * @property string $name
+ * @property string|null $description
  * @property string|null $begin_time 活动开始日期
  * @property string|null $end_time 活动结束日期
  * @property string $pic_url 海报
@@ -30,6 +31,7 @@ namespace App\Entities{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Activity whereBeginTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Activity whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Activity whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Activity whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Activity whereEndTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Activity whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Activity whereLabels($value)
@@ -115,6 +117,7 @@ namespace App\Entities{
  * @property int $id
  * @property int $activity_id
  * @property string $name
+ * @property string|null $description
  * @property int $user_id 创建者用户 id
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
@@ -122,6 +125,7 @@ namespace App\Entities{
  * @property-read \App\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereActivityId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereUpdatedAt($value)

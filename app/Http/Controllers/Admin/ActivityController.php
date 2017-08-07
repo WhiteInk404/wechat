@@ -12,9 +12,13 @@ class ActivityController extends Controller
 
     public function index()
     {
-        $activities = Activity::with('user')->paginate($this->per_page);
+        $activities = Activity::paginate($this->per_page);
 
         return view('admin.activities.index')->with(['activities' => $activities]);
+    }
+
+    public function show()
+    {
     }
 
     public function create()
@@ -38,5 +42,9 @@ class ActivityController extends Controller
     public function destroy($id)
     {
         return redirect()->back();
+    }
+
+    public function upload()
+    {
     }
 }

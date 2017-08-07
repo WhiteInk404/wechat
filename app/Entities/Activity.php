@@ -10,7 +10,7 @@ class Activity extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'begin_time', 'end_time', 'pic_url', 'labels'];
+    protected $fillable = ['name', 'description', 'begin_time', 'end_time', 'pic_url', 'labels'];
 
     public function user()
     {
