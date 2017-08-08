@@ -1,5 +1,4 @@
 @extends('layouts.app')
-@include('vendor.ueditor.assets')
 @section('content')
   <style>
     .file-drop-zone {
@@ -33,13 +32,13 @@
                   @endif
                 </div>
               </div>
-              <div class="form-group {{ $errors->has('start_time') ? ' has-error' : '' }}">
+              <div class="form-group {{ $errors->has('begin_time') ? ' has-error' : '' }}">
                 <label class="col-sm-2 control-label">开始时间</label>
                 <div class="col-sm-10">
-                  <input type="text" name="date" class="form-control pull-right datetimepicker" id="start_time" value="{{old('start_time')}}">
-                  @if ($errors->has('start_time'))
+                  <input type="text" name="begin_time" class="form-control pull-right datetimepicker" id="begin_time" value="{{old('begin_time')}}">
+                  @if ($errors->has('begin_time'))
                     <span class="help-block">
-                      {{ $errors->first('start_time') }}
+                      {{ $errors->first('begin_time') }}
                     </span>
                   @endif
                 </div>
@@ -47,7 +46,7 @@
               <div class="form-group {{ $errors->has('end_time') ? ' has-error' : '' }}">
                 <label class="col-sm-2 control-label">结束时间</label>
                 <div class="col-sm-10">
-                  <input type="text" name="date" class="form-control pull-right datetimepicker" id="end_time" value="{{old('end_time')}}">
+                  <input type="text" name="end_time" class="form-control pull-right datetimepicker" id="end_time" value="{{old('end_time')}}">
                   @if ($errors->has('end_time'))
                     <span class="help-block">
                       {{ $errors->first('end_time') }}
@@ -55,25 +54,48 @@
                   @endif
                 </div>
               </div>
-              <div class="form-group {{ $errors->has('covers') ? ' has-error' : '' }}">
+              <div class="form-group {{ $errors->has('pic_url') ? ' has-error' : '' }}">
                 <label class="col-sm-2 control-label">活动海报</label>
                 <div class="col-sm-10">
                   <input type="file" name="upload" id="upload" class="form-control">
-                  @if ($errors->has('covers'))
+                  @if ($errors->has('pic_url'))
                     <span class="help-block">
-                      {{ $errors->first('covers') }}
+                      {{ $errors->first('pic_url') }}
                     </span>
                   @endif
                   <span class="help-block">
                       <i class="fa fa-info-circle"></i>
-                      建议上传图片的大小为： 752*955
+                    <!--建议上传图片的大小为： 752*955-->
                   </span>
+                </div>
+              </div>
+              <div class="form-group {{ $errors->has('left_label') || $errors->has('right_label') || $errors->has('labels') ? ' has-error' : '' }}">
+                <label class="col-sm-2 control-label">报名符号规则</label>
+                <div class="col-sm-10">
+                  <input type="text" name="left_label" class="" value="{{old('left_label')}}">
+                   团队名
+                  <input type="text" name="right_label" class="" value="{{old('right_label')}}">
+                  @if ($errors->has('left_label'))
+                    <span class="help-block">
+                      {{ $errors->first('left_label') }}
+                    </span>
+                  @endif
+                  @if ($errors->has('right_label'))
+                    <span class="help-block">
+                      {{ $errors->first('right_label') }}
+                    </span>
+                  @endif
+                  @if ($errors->has('labels'))
+                    <span class="help-block">
+                      {{ $errors->first('labels') }}
+                    </span>
+                  @endif
                 </div>
               </div>
               <div class="form-group {{ $errors->has('description') ? ' has-error' : '' }}">
                 <label class="col-sm-2 control-label">描述</label>
                 <div class="col-sm-10">
-                  <textarea name="content" class="form-control">{{old('description')}}</textarea>
+                  <textarea name="description" class="form-control">{{old('description')}}</textarea>
                   @if ($errors->has('description'))
                     <span class="help-block">
                         {{ $errors->first('description') }}
@@ -104,9 +126,33 @@
           format: 'YYYY-MM-DD HH:mm'
         });
 
+        var preview_path = "{{old('pic_url') ? env('QINIU_DOMAIN').old('pic_url'): ''}}";
+
+        var preview_config = [{
+          caption: "{{old('pic_url')}}", // 展示的文件名
+          url: '{{ route("admin.activity.remove_pic") }}', // 删除url
+          type: 'image',
+          key: preview_path, // 删除时Ajax向后台传递的参数
+          width: '120px',
+          filetype: 'image/jpg',
+          extra: {_token: '{{ csrf_token() }}'}
+        }];
+
+        var preview = [];
+        if (preview_path) {
+          preview.push(preview_path);
+          var pic_url = "{{old('pic_url')}}";
+          $('#activity_form').append('<input type="hidden" name="pic_url" value="' + pic_url + '">');
+        }
+
         $("#upload").fileinput({
           "uploadUrl": "{{ route('admin.activity.upload') }}",
           "language": "zh",
+          "initialPreviewAsData": true,
+          "overwriteInitial": false,
+          "initialPreviewFileType": 'image',
+          "initialPreview": preview,
+          'initialPreviewConfig': preview_config,
           "uploadAsync": true,
           "uploadExtraData": {
             _token: "{{ csrf_token() }}"
@@ -119,6 +165,7 @@
             alert('上传失败');
           }
         }).on('filesuccessremove', function (event, id) {
+          console.log(1);
           var index = $('#zoom-' + id).data('fileindex');
           $('input[name="pic_url"]').remove();
         });

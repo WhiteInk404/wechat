@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Team extends Model
 {
-    protected $fillable = ['activity_id', 'name', 'description', 'user_id'];
+    protected $fillable = ['activity_id', 'name', 'description', 'user_id', 'count'];
 
     public function user()
     {

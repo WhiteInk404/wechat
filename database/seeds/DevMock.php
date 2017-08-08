@@ -2,6 +2,7 @@
 
 use App\Entities\Activity;
 use App\Entities\Role;
+use App\Entities\Team;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -49,5 +50,17 @@ class DevMock extends Seeder
             'pic_url'     => 'demo/activity_01.png',
             'labels'      => '#,#',
         ]);
+
+        $teams    = [];
+        $team_num = random_int(20, 100);
+        for ($i = 0; $i < $team_num; $i++) {
+            $teams[] = new Team([
+                'name'        => 'Team ' . $i,
+                'description' => 'Team ' . $i . ' description',
+                'user_id'     => 0,
+                'count'       => random_int(0, 100),
+            ]);
+        }
+        $activity->teams()->saveMany($teams);
     }
 }

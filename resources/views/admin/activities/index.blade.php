@@ -56,31 +56,6 @@
 @endsection
 @section('scripts')
   <script>
-      $(function () {
-        $('.grid-switch-status').bootstrapSwitch({
-          size: 'mini',
-          onText: '开启',
-          offText: '关闭',
-          onColor: 'success',
-          offColor: 'danger',
-          onSwitchChange: function (event, state) {
-            $(this).val(state ? '1' : '3');
-            var pk = $(this).data('key');
-            var value = $(this).val();
-            $.ajax({
-              url: "/admin/activities/change_states/" + pk,
-              type: "POST",
-              data: {
-                states: value,
-                _token: "{{csrf_token()}}",
-                _method: 'POST'
-              },
-              success: function (data) {
-
-              }
-            });
-          }
-        });
-      });
+  
   </script>
 @endsection

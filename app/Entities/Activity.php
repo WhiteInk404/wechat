@@ -12,6 +12,11 @@ class Activity extends Model
 
     protected $fillable = ['name', 'description', 'begin_time', 'end_time', 'pic_url', 'labels'];
 
+    public function getPicUrlAttribute()
+    {
+        return env('QINIU_DOMAIN') . $this->attributes['pic_url'];
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
