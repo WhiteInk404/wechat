@@ -48,19 +48,22 @@ class HomeController extends Controller
         }
 
         $participant = Participant::whereActivityId($activity_id)->whereUserId($wechat_user->user_id)->first();
-        if ($participant) {
-            // 已支持过其他团队
-            if ($participant->team_id != $team_id) {
-                return view('activity_team_supported')->with(['team' => $team]);
+        // 当前授权用户为当前 team 的创建者时只做展示
+        if ($team->user_id != $wechat_user->id) {
+            if ($participant) {
+                // 已支持过其他团队
+                if ($participant->team_id != $team_id) {
+                    return view('activity_team_supported')->with(['team' => $team]);
+                }
+            } else {
+                Participant::create([
+                    'activity_id' => $activity_id,
+                    'team_id'     => $team_id,
+                    'user_id'     => $wechat_user->user_id,
+                ]);
+                $team->count += 1;
+                $team->save();
             }
-        } else {
-            Participant::create([
-                'activity_id' => $activity_id,
-                'team_id'     => $team_id,
-                'user_id'     => $wechat_user->user_id,
-            ]);
-            $team->count += 1;
-            $team->save();
         }
 
         $sort = Team::whereActivityId($activity_id)->where('count', '>', $team->count)->count() + 1;
