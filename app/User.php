@@ -13,6 +13,10 @@ class User extends Authenticatable
 {
     use Notifiable, EntrustUserTrait;
 
+    const PASSPORT_TYPE_NORMAL = 0;
+    const PASSPORT_TYPE_WECHAT = 1;
+    const PASSPORT_TYPE_WXA    = 2;
+
     /**
      * The attributes that are mass assignable.
      *
