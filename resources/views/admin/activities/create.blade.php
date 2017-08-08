@@ -165,7 +165,6 @@
             alert('上传失败');
           }
         }).on('filesuccessremove', function (event, id) {
-          console.log(1);
           var index = $('#zoom-' + id).data('fileindex');
           $('input[name="pic_url"]').remove();
         });

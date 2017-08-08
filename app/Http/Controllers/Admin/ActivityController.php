@@ -6,6 +6,7 @@ use App\Entities\Activity;
 use App\Entities\Team;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ActivityCreateRequest;
+use App\Http\Requests\ActivityUpdateRequest;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
@@ -64,11 +65,28 @@ class ActivityController extends Controller
 
     public function edit($id)
     {
-        return view('admin.activities.edit');
+        $activity = Activity::find($id);
+
+        return view('admin.activities.edit')->with(['activity' => $activity]);
     }
 
-    public function update(Request $request, $id)
+    public function update(ActivityUpdateRequest $request, $id)
     {
+        $inputs = array_filter($request->only(['name', 'description', 'begin_time', 'end_time', 'pic_url']), function ($value) {
+            return !is_null($value);
+        });
+        try {
+            $activity = Activity::find($id);
+            $activity->update($inputs);
+            flash('修改成功', 'success');
+
+            return redirect()->back();
+        } catch (Exception $exception) {
+            flash('修改失败', 'error');
+            Log::info(__METHOD__, ['exception' => $exception->getMessage()]);
+
+            return redirect()->back()->withInput();
+        }
     }
 
     public function destroy($id)

@@ -36,7 +36,7 @@
                   <td>{{ $activity->begin_time }}</td>
                   <td>{{ $activity->end_time }}</td>
                   <td>{{ $activity->labels }}</td>
-                  <td> <img src="{{ $activity->pic_url }}" alt=""></td>
+                  <td> <img src="{{ $activity->full_pic_url }}" alt=""></td>
                 </tr>
               </tbody>
             </table>
