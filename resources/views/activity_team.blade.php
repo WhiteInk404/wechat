@@ -39,6 +39,40 @@
 
         <a href="javascript:;" class="btn block">帮助分享，提升团队人气</a>
     </div>
-</body>
 
+    <script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script>
+    var share_title = "我支持了 {{$team->name}}，你也来支持一下吧！";
+    var share_link = window.location.href;
+    var share_img_url = "{{$activity->full_pic_url}}";
+    var share_desc = "{{$activity->description}}";
+    
+    wx.onMenuShareTimeline({
+      title: share_title, // 分享标题
+      link: share_link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: share_img_url, // 分享图标
+      success: function () {
+        // 用户确认分享后执行的回调函数
+      },
+      cancel: function () {
+        // 用户取消分享后执行的回调函数
+      }
+    });
+
+    wx.onMenuShareAppMessage({
+      title: share_title, // 分享标题
+      desc: share_desc, // 分享描述
+      link: share_link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: share_img_url, // 分享图标
+      success: function () {
+        // 用户确认分享后执行的回调函数
+      },
+      cancel: function () {
+        // 用户取消分享后执行的回调函数
+      }
+    });
+    
+    wx.config({!! EasyWeChat::js()->config(['onMenuShareTimeline','onMenuShareAppMessage']) !!});
+</script>
+</body>
 </html>
