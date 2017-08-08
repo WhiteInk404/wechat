@@ -5,9 +5,7 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['wechat.oauth:snsapi_userinfo']], function () {
-    Route::get('teams/{team_id}', function () {
-        return 1;
-    });
+    Route::get('activity/{activity_id}/team/{team_id}', 'HomeController@activityTeam');
 });
 
 Auth::routes();
