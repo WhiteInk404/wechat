@@ -14,7 +14,7 @@
           <div class="box-header">
             <!--<h3 class="box-title"></h3>-->
             <a href="{{ route('admin.activities.edit',['id'=>$activity->id]) }}" class="btn btn-info btn-xs">编辑活动</a>
-            <form style="display: inline-block" action="{{ route('admin.activities.destroy',['id' =>$activity->id]) }}" method="post">
+            <form style="display: inline-block" onclick="if(!confirm('确定删除？')){return false;}" action="{{ route('admin.activities.destroy',['id' =>$activity->id]) }}" method="post">
               {{ csrf_field() }}{{ method_field('delete') }}
               <input type="submit" class="btn btn-danger btn-xs" value="删除">
             </form>

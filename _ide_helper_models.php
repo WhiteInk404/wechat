@@ -117,15 +117,15 @@ namespace App\Entities{
  * @property int $id
  * @property int $activity_id
  * @property string $name
- * @property string|null $description
  * @property int $user_id 创建者用户 id
+ * @property int $count 参与人数
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \App\Entities\Activity $activity
  * @property-read \App\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereActivityId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereUpdatedAt($value)

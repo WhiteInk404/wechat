@@ -56,7 +56,6 @@ class DevMock extends Seeder
         for ($i = 0; $i < $team_num; $i++) {
             $teams[] = new Team([
                 'name'        => 'Team ' . $i,
-                'description' => 'Team ' . $i . ' description',
                 'user_id'     => 0,
                 'count'       => random_int(0, 100),
             ]);

@@ -73,7 +73,9 @@ class ActivityController extends Controller
 
     public function destroy($id)
     {
-        return redirect()->back();
+        Activity::whereId($id)->delete();
+
+        return redirect(route('admin.activities.index'));
     }
 
     public function removePic(Request $request)
