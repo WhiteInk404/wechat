@@ -7,7 +7,9 @@ use App\Entities\Team;
 use App\Entities\WechatUser;
 use App\User;
 use EasyWeChat;
+use Image;
 use Log;
+use QrCode;
 
 class ServerController extends Controller
 {
@@ -41,14 +43,24 @@ EOL;
                                 if ($team) {
                                     return '团队名 ' . $team_name . ' 已经存在，请更换';
                                 }
-                                $team = Team::create([
+                                $team    = Team::create([
                                     'activity_id' => $activity->id,
                                     'name'        => $team_name,
                                     'user_id'     => $wechat_user->user_id,
                                     'count'       => 0,
                                 ]);
-                                // 二维码海报？todo
-                                $msg  = route('activity_team', ['activity_id' => $activity->id, 'team_id' => $team->id]);
+                                $url     = route('activity_team', ['activity_id' => $activity->id, 'team_id' => $team->id]);
+                                $img_url = $activity->full_pic_url;
+                                $image   = Image::make($img_url);
+
+                                /** @var \EasyWeChat\Material\Temporary $temp */
+                                $temp = EasyWeChat::material_temporary();
+                                $path = storage_path(uniqid() . '.png');
+                                $image->insert(QrCode::format('png')->size(100)->margin(0)->generate($url), 'center')->save($path);
+                                $result   = $temp->uploadImage($path);
+                                $media_id = $result->get('media_id');
+
+                                return new EasyWeChat\Message\Image(['media_id' => $media_id]);
                             } else {
                                 $msg = <<<'EOL'
 你好，$wechat_user->nickname

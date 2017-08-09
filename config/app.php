@@ -178,7 +178,8 @@ return [
         Laracasts\Flash\FlashServiceProvider::class,
         App\Libraries\SensitiveWords\Providers\SensitiveWordsServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
-
+        Intervention\Image\ImageServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -243,6 +244,8 @@ return [
         'EasyWeChat'     => Overtrue\LaravelWechat\Facade::class,
         'Sentry'         => Sentry\SentryLaravel\SentryFacade::class,
         'SensitiveWords' => App\Libraries\SensitiveWords\Facades\SensitiveWordsFacade::class,
+        'Image'          => Intervention\Image\Facades\Image::class,
+        'QrCode'         => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ],
 
 ];

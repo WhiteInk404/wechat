@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.31 on 2017-08-07.
+ * Generated for Laravel 5.3.31 on 2017-08-09.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -13382,6 +13382,203 @@ namespace App\Libraries\SensitiveWords\Facades {
  
 }
 
+namespace Intervention\Image\Facades { 
+
+    class Image {
+        
+        /**
+         * Overrides configuration settings
+         *
+         * @param array $config
+         * @static 
+         */ 
+        public static function configure($config = array())
+        {
+            return \Intervention\Image\ImageManager::configure($config);
+        }
+        
+        /**
+         * Initiates an Image instance from different input types
+         *
+         * @param mixed $data
+         * @return \Intervention\Image\Image 
+         * @static 
+         */ 
+        public static function make($data)
+        {
+            return \Intervention\Image\ImageManager::make($data);
+        }
+        
+        /**
+         * Creates an empty image canvas
+         *
+         * @param integer $width
+         * @param integer $height
+         * @param mixed $background
+         * @return \Intervention\Image\Image 
+         * @static 
+         */ 
+        public static function canvas($width, $height, $background = null)
+        {
+            return \Intervention\Image\ImageManager::canvas($width, $height, $background);
+        }
+        
+        /**
+         * Create new cached image and run callback
+         * (requires additional package intervention/imagecache)
+         *
+         * @param \Closure $callback
+         * @param integer $lifetime
+         * @param boolean $returnObj
+         * @return \Image 
+         * @static 
+         */ 
+        public static function cache($callback, $lifetime = null, $returnObj = false)
+        {
+            return \Intervention\Image\ImageManager::cache($callback, $lifetime, $returnObj);
+        }
+         
+    }
+ 
+}
+
+namespace SimpleSoftwareIO\QrCode\Facades { 
+
+    class QrCode {
+        
+        /**
+         * Generates a QrCode.
+         *
+         * @param string $text The text to be converted into a QrCode
+         * @param null|string $filename The filename and path to save the QrCode file
+         * @return string|void Returns a QrCode string depending on the format, or saves to a file.
+         * @static 
+         */ 
+        public static function generate($text, $filename = null)
+        {
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::generate($text, $filename);
+        }
+        
+        /**
+         * Merges an image with the center of the QrCode.
+         *
+         * @param $filepath string The filepath to an image
+         * @param $percentage float The amount that the merged image should be placed over the qrcode.
+         * @param $absolute boolean Whether to use an absolute filepath or not.
+         * @return $this 
+         * @static 
+         */ 
+        public static function merge($filepath, $percentage = '0.2', $absolute = false)
+        {
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::merge($filepath, $percentage, $absolute);
+        }
+        
+        /**
+         * Merges an image string with the center of the QrCode, does not check for correct format.
+         *
+         * @param $content string The string contents of an image.
+         * @param $percentage float The amount that the merged image should be placed over the qrcode.
+         * @return $this 
+         * @static 
+         */ 
+        public static function mergeString($content, $percentage = '0.2')
+        {
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::mergeString($content, $percentage);
+        }
+        
+        /**
+         * Switches the format of the outputted QrCode or defaults to SVG.
+         *
+         * @param string $format The desired format.
+         * @throws \InvalidArgumentException
+         * @return $this 
+         * @static 
+         */ 
+        public static function format($format)
+        {
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::format($format);
+        }
+        
+        /**
+         * Changes the size of the QrCode.
+         *
+         * @param int $pixels The size of the QrCode in pixels
+         * @return $this 
+         * @static 
+         */ 
+        public static function size($pixels)
+        {
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::size($pixels);
+        }
+        
+        /**
+         * Changes the foreground color of a QrCode.
+         *
+         * @param int $red
+         * @param int $green
+         * @param int $blue
+         * @return $this 
+         * @static 
+         */ 
+        public static function color($red, $green, $blue)
+        {
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::color($red, $green, $blue);
+        }
+        
+        /**
+         * Changes the background color of a QrCode.
+         *
+         * @param int $red
+         * @param int $green
+         * @param int $blue
+         * @return $this 
+         * @static 
+         */ 
+        public static function backgroundColor($red, $green, $blue)
+        {
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::backgroundColor($red, $green, $blue);
+        }
+        
+        /**
+         * Changes the error correction level of a QrCode.
+         *
+         * @param string $level Desired error correction level.  L = 7% M = 15% Q = 25% H = 30%
+         * @return $this 
+         * @static 
+         */ 
+        public static function errorCorrection($level)
+        {
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::errorCorrection($level);
+        }
+        
+        /**
+         * Creates a margin around the QrCode.
+         *
+         * @param int $margin The desired margin in pixels around the QrCode
+         * @return $this 
+         * @static 
+         */ 
+        public static function margin($margin)
+        {
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::margin($margin);
+        }
+        
+        /**
+         * Sets the Encoding mode.
+         *
+         * @param string $encoding
+         * @return $this 
+         * @static 
+         */ 
+        public static function encoding($encoding)
+        {
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::encoding($encoding);
+        }
+         
+    }
+ 
+}
+
 
 namespace  { 
 
@@ -15301,6 +15498,10 @@ namespace  {
     class Sentry extends \Sentry\SentryLaravel\SentryFacade {}
 
     class SensitiveWords extends \App\Libraries\SensitiveWords\Facades\SensitiveWordsFacade {}
+
+    class Image extends \Intervention\Image\Facades\Image {}
+
+    class QrCode extends \SimpleSoftwareIO\QrCode\Facades\QrCode {}
  
 }
 
