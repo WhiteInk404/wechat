@@ -35,7 +35,7 @@ class HomeController extends Controller
                 'password'      => bcrypt('password'),
             ]);
 
-            $wechat_user = $user->wechatUser()->save(new WechatUser([
+            $wechat_user = new WechatUser([
                 'openid'     => $oauth_user->getId(),
                 'nickname'   => $oauth_user->getNickname(),
                 'avatar_url' => $oauth_user->getAvatar(),
@@ -44,27 +44,27 @@ class HomeController extends Controller
                 'province'   => $oauth_user->getOriginal()['province'],
                 'country'    => $oauth_user->getOriginal()['country'],
                 'union_id'   => '', // todo
-            ]));
+            ]);
+            $user->wechatUser()->save($wechat_user);
         }
 
-        $participant = Participant::whereActivityId($activity_id)->whereUserId($wechat_user->user_id)->first();
-        // 当前授权用户为当前 team 的创建者时只做展示
-        if ($team->user_id != $wechat_user->id) {
+        // 当前授权用户不为当前团队的创建者时检测是否有支持过当前活动其他团队
+        if ($team->user_id != $wechat_user->user_id) {
+            $participant = Participant::whereActivityId($activity_id)->whereUserId($wechat_user->user_id)->first();
             if ($participant) {
                 // 已支持过其他团队
                 if ($participant->team_id != $team_id) {
-                    return view('activity_team_supported')->with(['team' => $team]);
+                    return view('activity_team_supported')->with(['team' => $participant->team]);
                 }
-            } else {
-                Participant::create([
-                    'activity_id' => $activity_id,
-                    'team_id'     => $team_id,
-                    'user_id'     => $wechat_user->user_id,
-                ]);
-                $team->count += 1;
-                $team->save();
             }
         }
+        Participant::create([
+            'activity_id' => $activity_id,
+            'team_id'     => $team_id,
+            'user_id'     => $wechat_user->user_id,
+        ]);
+        $team->count += 1;
+        $team->save();
 
         $sort = Team::whereActivityId($activity_id)->where('count', '>', $team->count)->count() + 1;
 

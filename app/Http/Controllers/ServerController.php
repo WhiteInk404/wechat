@@ -33,47 +33,49 @@ Welcome to WeCee!
 EOL;
 
                             return $str;
-                        case 'text':
-                            $wechat_user = $this->getUser($open_id);
-                            $labels      = mb_substr($message->Content, 0, 1) . ',' . mb_substr($message->Content, -1, 1);
-                            $activity    = Activity::whereLabels($labels)->first();
-                            if ($activity) {
-                                $team_name = mb_substr($message->Content, 1, -1);
-                                $team      = Team::whereName($team_name)->whereActivityId($activity->id)->first();
-                                if ($team) {
-                                    return '团队名 ' . $team_name . ' 已经存在，请更换';
-                                }
-                                $team    = Team::create([
-                                    'activity_id' => $activity->id,
-                                    'name'        => $team_name,
-                                    'user_id'     => $wechat_user->user_id,
-                                    'count'       => 0,
-                                ]);
-                                $url     = route('activity_team', ['activity_id' => $activity->id, 'team_id' => $team->id]);
-                                $img_url = $activity->full_pic_url;
-                                $image   = Image::make($img_url);
+                        default:
+                            exit; // 交给机器人吧
+                    }
+                    break;
 
-                                /** @var \EasyWeChat\Material\Temporary $temp */
-                                $temp = EasyWeChat::material_temporary();
-                                $path = storage_path(uniqid() . '.png');
-                                $image->insert(QrCode::format('png')->size(100)->margin(0)->generate($url), 'center')->save($path);
-                                $result   = $temp->uploadImage($path);
-                                $media_id = $result->get('media_id');
+                case 'text':
+                    $wechat_user = $this->getUser($open_id);
+                    $labels      = mb_substr($message->Content, 0, 1) . ',' . mb_substr($message->Content, -1, 1);
+                    Log::info('$labels', ['labels' => $labels]);
+                    $activity = Activity::whereLabels($labels)->first();
+                    if ($activity) {
+                        $team_name = mb_substr($message->Content, 1, -1);
+                        $team      = Team::whereName($team_name)->whereActivityId($activity->id)->first();
+                        if ($team) {
+                            return '团队名 ' . $team_name . ' 已经存在，请更换';
+                        }
+                        $team    = Team::create([
+                            'activity_id' => $activity->id,
+                            'name'        => $team_name,
+                            'user_id'     => $wechat_user->user_id,
+                            'count'       => 0,
+                        ]);
+                        $url     = route('activity_team', ['activity_id' => $activity->id, 'team_id' => $team->id]);
+                        $img_url = $activity->full_pic_url;
+                        $image   = Image::make($img_url);
 
-                                return new EasyWeChat\Message\Image(['media_id' => $media_id]);
-                            } else {
-                                $msg = <<<'EOL'
+                        /** @var \EasyWeChat\Material\Temporary $temp */
+                        $temp = EasyWeChat::material_temporary();
+                        $path = storage_path(uniqid() . '.png');
+                        $image->insert(QrCode::format('png')->size(100)->margin(0)->generate($url), 'center')->save($path);
+                        $result   = $temp->uploadImage($path);
+                        $media_id = $result->get('media_id');
+
+                        return new EasyWeChat\Message\Image(['media_id' => $media_id]);
+                    } else {
+                        $msg = <<<'EOL'
 你好，$wechat_user->nickname
 如果您需要客服帮助，请添加微信号：
 xuechun_1991
 EOL;
-                            }
-
-                            return $msg;
-                            break;
-                        default:
-                            exit; // 交给机器人吧
                     }
+
+                    return $msg;
                     break;
             }
         });

@@ -19,7 +19,7 @@ class CreateParticipantsTable extends Migration
             $table->integer('team_id');
             $table->integer('user_id');
             $table->timestamps();
-            $table->unique(['team_id', 'user_id']);
+            $table->index(['activity_id', 'user_id']);
         });
     }
 
