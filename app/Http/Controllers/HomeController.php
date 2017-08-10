@@ -48,23 +48,23 @@ class HomeController extends Controller
             $user->wechatUser()->save($wechat_user);
         }
 
-        // 当前授权用户不为当前团队的创建者时检测是否有支持过当前活动其他团队
-        if ($team->user_id != $wechat_user->user_id) {
-            $participant = Participant::whereActivityId($activity_id)->whereUserId($wechat_user->user_id)->first();
-            if ($participant) {
-                // 已支持过其他团队
-                if ($participant->team_id != $team_id) {
-                    return view('activity_team_supported')->with(['team' => $participant->team]);
-                }
-            }
+        $other_participant = Participant::whereActivityId($activity_id)->whereUserId($wechat_user->user_id)->where('team_id', '!=', $team_id)->first();
+        // 当前用户支持过当前活动的其他团队，不是当前团队的创建者
+        if ($other_participant && $team->user_id != $wechat_user->user_id) {
+            return view('activity_team_supported')->with(['team' => $other_participant->team]);
         }
-        Participant::create([
-            'activity_id' => $activity_id,
-            'team_id'     => $team_id,
-            'user_id'     => $wechat_user->user_id,
-        ]);
-        $team->count += 1;
-        $team->save();
+
+        $exists = Participant::whereActivityId($activity_id)->whereTeamId($team_id)->whereUserId($wechat_user->user_id)->exists();
+        // 当前用户已支持过当前活动
+        if (!$exists) {
+            Participant::create([
+                'activity_id' => $activity_id,
+                'team_id'     => $team_id,
+                'user_id'     => $wechat_user->user_id,
+            ]);
+            $team->count += 1;
+            $team->save();
+        }
 
         $sort = Team::whereActivityId($activity_id)->where('count', '>', $team->count)->count() + 1;
 

@@ -22,6 +22,9 @@ namespace App\Entities{
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property string|null $deleted_at
+ * @property-read mixed $full_pic_url
+ * @property-read mixed $left_label
+ * @property-read mixed $right_label
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Participant[] $participants
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Team[] $teams
  * @property-read \App\User $user
@@ -122,6 +125,7 @@ namespace App\Entities{
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \App\Entities\Activity $activity
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Participant[] $participants
  * @property-read \App\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereActivityId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Team whereCount($value)
@@ -182,6 +186,7 @@ namespace App{
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Activity[] $activities
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Participant[] $participants
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Role[] $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Team[] $teams
  * @property-read \App\Entities\WechatUser $wechatUser

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Entities\Activity;
+use App\Entities\Participant;
 use App\Entities\Team;
 use App\Entities\WechatUser;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,5 +51,10 @@ class User extends Authenticatable
     public function teams()
     {
         return $this->hasMany(Team::class);
+    }
+
+    public function participants()
+    {
+        return $this->hasMany(Participant::class);
     }
 }
