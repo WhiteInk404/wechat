@@ -23,7 +23,7 @@
             @if(!$team->participants->isEmpty())
             <div class="avatars">
                 <p class="imgs">
-                    @foreach($team->participants()->take(16)->orderBy('id','desc')->get() as $participant)
+                    @foreach($team->participants()->take(10)->orderBy('id','desc')->get() as $participant)
                     <img src="{{ $participant->user->wechatUser->avatar_url }}" alt="">
                     @endforeach
                 </p>

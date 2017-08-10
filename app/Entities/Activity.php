@@ -34,12 +34,12 @@ class Activity extends Model
 
     public function getFriendlyBeginTimeAttribute()
     {
-        return date('m月n日', strtotime($this->attributes['begin_time']));
+        return date('n月j日', strtotime($this->attributes['begin_time']));
     }
 
     public function getFriendlyEndTimeAttribute()
     {
-        return date('m月n日', strtotime($this->attributes['end_time']));
+        return date('n月j日', strtotime($this->attributes['end_time']));
     }
 
     public function user()
