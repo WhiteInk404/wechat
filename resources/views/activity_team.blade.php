@@ -26,8 +26,8 @@
                     @foreach($team->participants()->take(9)->orderBy('id','desc')->get() as $participant)
                     <img src="{{ $participant->user->wechatUser->avatar_url }}" alt="">
                     @endforeach
+                    <a href="{{ route('activity_team_more',['activity_id'=>$activity->id,'team_id'=>$team->id]) }}"><i class="icon icon-more"></i></a>
                 </p>
-                <a href="{{ route('activity_team_more',['activity_id'=>$activity->id,'team_id'=>$team->id]) }}"><i class="icon icon-more"></i></a>
             </div>
             @endif
         </div>
