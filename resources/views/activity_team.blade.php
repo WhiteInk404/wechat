@@ -13,7 +13,7 @@
         <div class="box">
             <h2 class="fz17 medium color-medium">活动信息</h2>
             <p class="color-light">{{$activity->description}}</p>
-            <p class="fz13 medium color-light">时间：{{ $activity->begin_time }} - {{ $activity->end_time }}</p>
+            <p class="fz13 medium color-light">时间：{{ $activity->friendly_begin_time }} - {{ $activity->friendly_end_time }}</p>
         </div>
 
         <div class="box">
@@ -27,7 +27,7 @@
                     <img src="{{ $participant->user->wechatUser->avatar_url }}" alt="">
                     @endforeach
                 </p>
-                <a href="support-team-more.html"><i class="icon icon-more"></i></a>
+                <a href="{{ route('activity_team_more',['activity_id'=>$activity->id,'team_id'=>$team->id]) }}"><i class="icon icon-more"></i></a>
             </div>
             @endif
         </div>
