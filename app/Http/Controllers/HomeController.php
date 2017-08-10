@@ -83,7 +83,7 @@ class HomeController extends Controller
             return view('activity_team_finished');
         }
 
-        $participants = Participant::with('user')->whereActivityId($activity_id)->whereTeamId($team_id)->get();
+        $participants = Participant::with('user')->whereActivityId($activity_id)->whereTeamId($team_id)->orderBy('id', 'desc')->get();
 
         return view('activity_team_more')->with(['participants' => $participants, 'activity' => $activity, 'team' => $team]);
     }
