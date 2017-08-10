@@ -15,8 +15,8 @@
     <div class="container-avatars">
         <p class="fz17 color-light">团队全部支持者</p>
         <div class="imgs">
-            @forech($participants as $participant)
-            <img src="{{$participant->wechatUser->avatar_url}}" alt="">
+            @foreach($participants as $participant)
+            <img src="{{$participant->user->wechatUser->avatar_url}}" alt="">
             @endforeach
         </div>
     </div>
