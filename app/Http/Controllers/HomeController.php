@@ -68,6 +68,23 @@ class HomeController extends Controller
 
         $sort = Team::whereActivityId($activity_id)->where('count', '>', $team->count)->count() + 1;
 
-        return view('activity_team')->with(['activity' => $activity, 'team' => $team, 'sort' => $sort]);
+        return view('activity_team')->with(['activity' => $activity->append(['friendly_begin_time', 'friendly_end_time']), 'team' => $team, 'sort' => $sort]);
+    }
+
+    public function activityTeamMore($activity_id, $team_id)
+    {
+        $activity = Activity::find($activity_id);
+        $team     = Team::find($team_id);
+        if (!$activity || !$team) {
+            return '活动信息有误';
+        }
+
+        if (strtotime($activity->end_time) < Carbon::now()->timestamp) {
+            return view('activity_team_finished');
+        }
+
+        $participants = Participant::with('user')->whereActivityId($activity_id)->whereTeamId($team_id)->get();
+
+        return view('activity_team_more')->with(['participants' => $participants, 'activity' => $activity, 'team' => $team]);
     }
 }

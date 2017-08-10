@@ -1,39 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>支持团队</title>
     <link rel="stylesheet" href="/frontend/css/support-team.css">
+    
 </head>
+
 <body style="background:#EFEFF4">
-<div class="p10 fz17 tac white medium yellow-bg">感谢您对本团队的支持！</div>
-    <img class="w100" src="{{$activity->full_pic_url}}" alt="">
-    <div class="container container-info">
-        <div class="box">
-            <h2 class="fz17 medium color-medium">活动信息</h2>
-            <p class="color-light">{{$activity->description}}</p>
-            <p class="fz13 medium color-light">时间：{{ $activity->begin_time }} - {{ $activity->end_time }}</p>
-        </div>
+    <a href="javascript:;" class="fz17 block btn share-btn no-radius">帮助分享，提升团队人气 <i class="icon icon-share"></i></a>
 
-        <div class="box">
-            <h2 class="team-name fz15 medium color-medium">团队名称：{{$team->name}}</h2>
-            <p class="color-gray">当前共有 {{$team->participants()->count()}} 名支持者</p>
-            <p class="number artbrush">{{$sort}}</p>
-            @if(!$team->participants->isEmpty())
-            <div class="avatars">
-                <p class="imgs">
-                    @foreach($team->participants()->take(16)->orderBy('id','desc')->get() as $participant)
-                    <img src="{{ $participant->user->wechatUser->avatar_url }}" alt="">
-                    @endforeach
-                </p>
-                <a href="support-team-more.html"><i class="icon icon-more"></i></a>
-            </div>
-            @endif
-        </div>
-
-        <div class="box share-box">
-            <a href="javascript:;" class="btn block share-btn">帮助分享，提升团队人气</a>
+    <div class="container-avatars">
+        <p class="fz17 color-light">团队全部支持者</p>
+        <div class="imgs">
+            @forech($participants as $participant)
+            <img src="{{$participant->wechatUser->avatar_url}}" alt="">
+            @endforeach
         </div>
     </div>
 
@@ -52,7 +36,6 @@
         shareTip.onclick = function () {
           shareTip.style.display = 'none';
         };
-
 
         wx.config({!! EasyWeChat::js()->config(['onMenuShareTimeline', 'onMenuShareAppMessage']) !!});
 
@@ -93,4 +76,5 @@
         });
     </script>
 </body>
+
 </html>
