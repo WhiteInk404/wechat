@@ -68,7 +68,7 @@ EOL;
 
                         return new EasyWeChat\Message\Image(['media_id' => $media_id]);
                     } else {
-                        $msg = <<<'EOL'
+                        $msg = <<<EOL
 你好，$wechat_user->nickname
 如果您需要客服帮助，请添加微信号：
 xuechun_1991
