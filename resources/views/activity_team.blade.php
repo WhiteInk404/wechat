@@ -22,11 +22,11 @@
             <p class="number artbrush">{{$sort}}</p>
             @if(!$team->participants->isEmpty())
             <div class="avatars">
-                <p class="imgs">
+                <p class="imgs clearfix">
                     @foreach($team->participants()->take(9)->orderBy('id','desc')->get() as $participant)
                     <img src="{{ $participant->user->wechatUser->avatar_url }}" alt="">
                     @endforeach
-                    <a href="{{ route('activity_team_more',['activity_id'=>$activity->id,'team_id'=>$team->id]) }}"><i class="icon icon-more"></i></a>
+                    <a class="supporter-more" href="{{ route('activity_team_more',['activity_id'=>$activity->id,'team_id'=>$team->id]) }}"><i class="icon icon-more"></i></a>
                 </p>
             </div>
             @endif

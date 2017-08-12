@@ -60,10 +60,11 @@ img { max-width: 100%; vertical-align: middle;}
 .container-info .box .team-name { padding-bottom: 15px; border-bottom: 1px solid #E5E5E5;}
 .container-info .box p { margin-top: 10px;}
 .container-info .number { position: absolute; right: 13px; top: 0; font-size: 26px; text-decoration: underline; color: #FC7D28;}
-.container-info .avatars { margin-left: -3px;}
-.container-info .avatars .imgs { margin-top: 15px; font-size: 0;}
-.container-info .avatars img { width: 30px; margin-left: 3px; margin-right: 2px; border-radius: 2px;}
-.container-info .avatars .icon-more { margin-left: 3px; margin-right: 0;}
+.container-info .avatars { margin-left: -.8vw;}
+.container-info .avatars .imgs { position: relative; margin-top: 15px;}
+.container-info .avatars img { float: left; width: 9.15%; margin-left: .8vw; border-radius: 2px; box-sizing: border-box;}
+.container-info .avatars .supporter-more { position: absolute; right: 0; top: 0; width: 9.15%; padding-top: 9.15%; border-radius: 2px; box-sizing: border-box;}
+.container-info .avatars .icon-more { position: absolute; left: 0; top: 0; width: 100%; height: 100%;}
 .container-info .share-box { margin-top: 42px; padding: 10px 15px;}
 .container-tip img { width: 93px; margin-top: 50px;}
 .container-tip p { margin-top: 25px;}
