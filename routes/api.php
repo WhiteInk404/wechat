@@ -16,4 +16,6 @@ Route::group(['middleware' => ['jwt.auth'/*, 'jwt.refresh'*/]], function () {
     });
 
     Route::post('word/next', 'WordRecordAPIController@next');
+    Route::post('reminder', 'ReminderAPIController@store');
+    Route::delete('reminder', 'ReminderAPIController@destroy');
 });
