@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\DaySignMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -59,5 +60,6 @@ class Kernel extends HttpKernel
         'jwt.auth'     => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
         'jwt.refresh'  => \Tymon\JWTAuth\Middleware\RefreshToken::class,
         'wechat.oauth' => \Overtrue\LaravelWechat\Middleware\OAuthAuthenticate::class,
+        'day-sign'     => DaySignMiddleware::class,
     ];
 }

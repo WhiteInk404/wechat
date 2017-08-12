@@ -31,7 +31,7 @@ class ReminderAPIController extends AppBaseController
     public function destroy()
     {
         $user = Auth::user();
-        $user->reminder->delete();
+        $user->reminder()->delete();
 
         return $this->sendResponse([], '取消提醒成功');
     }
