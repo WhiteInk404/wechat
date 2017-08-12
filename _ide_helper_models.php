@@ -22,6 +22,8 @@ namespace App\Entities{
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property string|null $deleted_at
+ * @property-read mixed $friendly_begin_time
+ * @property-read mixed $friendly_end_time
  * @property-read mixed $full_pic_url
  * @property-read mixed $left_label
  * @property-read mixed $right_label
@@ -93,6 +95,25 @@ namespace App\Entities{
 
 namespace App\Entities{
 /**
+ * App\Entities\Reminder
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string $time
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Reminder whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Reminder whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Reminder whereTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Reminder whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Reminder whereUserId($value)
+ */
+	class Reminder extends \Eloquent {}
+}
+
+namespace App\Entities{
+/**
  * App\Entities\Role
  *
  * @property int $id
@@ -111,6 +132,23 @@ namespace App\Entities{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Role whereUpdatedAt($value)
  */
 	class Role extends \Eloquent {}
+}
+
+namespace App\Entities{
+/**
+ * App\Entities\SignRecord
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\SignRecord whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\SignRecord whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\SignRecord whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\SignRecord whereUserId($value)
+ */
+	class SignRecord extends \Eloquent {}
 }
 
 namespace App\Entities{
@@ -171,6 +209,64 @@ namespace App\Entities{
 	class WechatUser extends \Eloquent {}
 }
 
+namespace App\Entities{
+/**
+ * App\Entities\Wordbook
+ *
+ * @property int $id
+ * @property string $name
+ * @property int $sort
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\WordbookContent[] $contents
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Wordbook onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Wordbook whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Wordbook whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Wordbook whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Wordbook whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Wordbook whereSort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Wordbook whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Wordbook withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Wordbook withoutTrashed()
+ */
+	class Wordbook extends \Eloquent {}
+}
+
+namespace App\Entities{
+/**
+ * App\Entities\WordbookContent
+ *
+ * @property int $id
+ * @property int $wordbook_id
+ * @property string $facade
+ * @property string $back
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\Entities\Wordbook $wordbook
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookContent whereBack($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookContent whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookContent whereFacade($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookContent whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookContent whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookContent whereWordbookId($value)
+ */
+	class WordbookContent extends \Eloquent {}
+}
+
+namespace App\Entities{
+/**
+ * App\Entities\WordbookRecord
+ *
+ * @property-read \App\Entities\Activity $activity
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Participant[] $participants
+ * @property-read \App\User $user
+ */
+	class WordbookRecord extends \Eloquent {}
+}
+
 namespace App{
 /**
  * App\User
@@ -185,9 +281,12 @@ namespace App{
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Activity[] $activities
+ * @property-read mixed $sign_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Participant[] $participants
+ * @property-read \App\Entities\Reminder $reminder
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Role[] $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\SignRecord[] $signRecords
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Team[] $teams
  * @property-read \App\Entities\WechatUser $wechatUser
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCreatedAt($value)

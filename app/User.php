@@ -4,6 +4,8 @@ namespace App;
 
 use App\Entities\Activity;
 use App\Entities\Participant;
+use App\Entities\Reminder;
+use App\Entities\SignRecord;
 use App\Entities\Team;
 use App\Entities\WechatUser;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -27,8 +29,6 @@ class User extends Authenticatable
         'name', 'passport_type', 'email', 'password',
     ];
 
-    protected $appends = ['is_vip'];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -37,6 +37,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * 签到次数
+     *
+     * @return mixed
+     */
+    public function getSignCountAttribute()
+    {
+        return $this->signRecords()->count();
+    }
 
     public function wechatUser()
     {
@@ -56,5 +66,15 @@ class User extends Authenticatable
     public function participants()
     {
         return $this->hasMany(Participant::class);
+    }
+
+    public function reminder()
+    {
+        return $this->hasOne(Reminder::class);
+    }
+
+    public function signRecords()
+    {
+        return $this->hasMany(SignRecord::class);
     }
 }
