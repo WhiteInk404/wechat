@@ -245,6 +245,7 @@ namespace App\Entities{
  * @property string $back
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\WordRecord[] $wordRecord
  * @property-read \App\Entities\Wordbook $wordbook
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookContent whereBack($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookContent whereCreatedAt($value)
@@ -258,13 +259,52 @@ namespace App\Entities{
 
 namespace App\Entities{
 /**
- * App\Entities\WordbookRecord
+ * App\Entities\WordbookState
  *
- * @property-read \App\Entities\Activity $activity
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Participant[] $participants
+ * @property int $id
+ * @property int $user_id
+ * @property int $wordbook_id
+ * @property int $word_total
+ * @property int $remember_total
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
  * @property-read \App\User $user
+ * @property-read \App\Entities\Wordbook $wordbook
+ * @property-read \App\Entities\WordbookContent $wordbookContent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookState whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookState whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookState whereRememberTotal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookState whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookState whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookState whereWordTotal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookState whereWordbookId($value)
  */
-	class WordbookRecord extends \Eloquent {}
+	class WordbookState extends \Eloquent {}
+}
+
+namespace App\Entities{
+/**
+ * App\Entities\WordRecord
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $wordbook_id
+ * @property int $wordbook_content_id
+ * @property int $status 0 不认识 1 认识 2 模糊
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\User $user
+ * @property-read \App\Entities\Wordbook $wordbook
+ * @property-read \App\Entities\WordbookContent $wordbookContent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordRecord whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordRecord whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordRecord whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordRecord whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordRecord whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordRecord whereWordbookContentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordRecord whereWordbookId($value)
+ */
+	class WordRecord extends \Eloquent {}
 }
 
 namespace App{
@@ -289,6 +329,8 @@ namespace App{
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\SignRecord[] $signRecords
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Team[] $teams
  * @property-read \App\Entities\WechatUser $wechatUser
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\WordRecord[] $wordbookRecord
+ * @property-read \App\Entities\WordbookState $wordbookState
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmail($value)

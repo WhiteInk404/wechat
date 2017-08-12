@@ -12,4 +12,9 @@ class WordbookContent extends Model
     {
         return $this->belongsTo(Wordbook::class);
     }
+
+    public function wordRecord()
+    {
+        return $this->hasMany(WordRecord::class);
+    }
 }

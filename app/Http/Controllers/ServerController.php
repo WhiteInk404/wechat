@@ -93,9 +93,10 @@ EOL;
             $user_info = $easywechat_user->get($open_id);
 
             $user = User::create([
-                'name'     => $user_info->get('openid'),
-                'email'    => $user_info->get('openid') . '@example.com',
-                'password' => bcrypt($user_info->get('password')),
+                'name'          => $user_info->get('openid'),
+                'email'         => $user_info->get('openid') . '@example.com',
+                'password'      => bcrypt($user_info->get('password')),
+                'passport_type' => User::PASSPORT_TYPE_WECHAT,
             ]);
             $user->wechatUser()->save(new WechatUser([
                     'openid'     => $user_info->get('openid'),

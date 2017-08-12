@@ -8,6 +8,8 @@ use App\Entities\Reminder;
 use App\Entities\SignRecord;
 use App\Entities\Team;
 use App\Entities\WechatUser;
+use App\Entities\WordbookState;
+use App\Entities\WordRecord;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
@@ -76,5 +78,15 @@ class User extends Authenticatable
     public function signRecords()
     {
         return $this->hasMany(SignRecord::class);
+    }
+
+    public function wordbookRecord()
+    {
+        return $this->hasMany(WordRecord::class);
+    }
+
+    public function wordbookState()
+    {
+        return $this->hasOne(WordbookState::class);
     }
 }

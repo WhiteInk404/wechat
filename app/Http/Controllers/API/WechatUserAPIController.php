@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Entities\Role;
 use App\Entities\WechatUser;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\WechatUserAuthRequest;
@@ -15,11 +14,6 @@ use Illuminate\Database\QueryException;
 use JWTAuth;
 use Log;
 
-/**
- * Class WechatAppUserController
- *
- * @package App\Http\Controllers\API
- */
 class WechatUserAPIController extends AppBaseController
 {
     private $wechat_app;
@@ -60,8 +54,7 @@ class WechatUserAPIController extends AppBaseController
         if (!$wechat_app_user) {
             DB::beginTransaction();
             try {
-                $user = $this->createBaseUser($openid);
-                $user->attachRole(Role::find(Role::ROLE_MEMBER));
+                $user            = $this->createBaseUser($openid);
                 $wechat_app_user = WechatUser::create(['user_id' => $user->id, 'openid' => $openid]);
             } catch (QueryException $e) {
                 DB::rollBack();
@@ -104,6 +97,6 @@ class WechatUserAPIController extends AppBaseController
      */
     private function createBaseUser($openid)
     {
-        return User::create(['name' => $openid, 'email' => $openid . '@' . 'wechat.app', 'password' => bcrypt($openid)]);
+        return User::create(['name' => $openid, 'email' => $openid . '@' . 'wechat.app', 'password' => bcrypt($openid), 'passport_type' => User::PASSPORT_TYPE_WXA]);
     }
 }
