@@ -47,7 +47,12 @@ EOL;
                         $team_name = mb_substr($message->Content, 1, -1);
                         $team      = Team::whereName($team_name)->whereActivityId($activity->id)->first();
                         if ($team) {
-                            return '团队名 ' . $team_name . ' 已经存在，请更换';
+                            return '此活动中团队名 ' . $team_name . ' 已经存在，请换一个';
+                        }
+
+                        $team = Team::whereUserId($wechat_user->user_id)->whereActivityId($activity->id)->first();
+                        if ($team) {
+                            return '您在此活动中已经创建过团队 ' . $team->name . ' 了';
                         }
                         $team    = Team::create([
                             'activity_id' => $activity->id,
