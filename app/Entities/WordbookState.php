@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class WordbookState extends Model
 {
-    protected $fillable = ['user_id', 'wordbook_id', 'word_total', 'remember_total'];
+    protected $fillable = ['user_id', 'wordbook_id', 'word_total', 'remember_total', 'remembered_wordbook_total'];
+    protected $appends  = ['is_over'];
+
+    public function getIsOverAttribute()
+    {
+        return $this->attributes['remembered_wordbook_total'] == Wordbook::count();
+    }
 
     public function user()
     {

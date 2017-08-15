@@ -19,6 +19,7 @@ class CreateWordbookStatesTable extends Migration
             $table->integer('wordbook_id');
             $table->integer('word_total');
             $table->integer('remember_total')->default(0);
+            $table->integer('remembered_wordbook_total')->default(0);
             $table->timestamps();
         });
     }

@@ -17,9 +17,10 @@ class UserAPIController extends AppBaseController
         if (!$user->wordbookState) {
             $wordbook       = Wordbook::orderByRaw('id asc,sort asc')->first();
             $wordbook_state = new WordbookState([
-                'wordbook_id'    => $wordbook->id,
-                'word_total'     => $wordbook->contents()->count(),
-                'remember_total' => 0,
+                'wordbook_id'               => $wordbook->id,
+                'word_total'                => $wordbook->contents()->count(),
+                'remember_total'            => 0,
+                'remembered_wordbook_total' => 0,
             ]);
             $user->wordbookState()->save($wordbook_state);
         }

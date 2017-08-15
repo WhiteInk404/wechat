@@ -266,6 +266,7 @@ namespace App\Entities{
  * @property int $wordbook_id
  * @property int $word_total
  * @property int $remember_total
+ * @property int $remembered_wordbook_total
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \App\User $user
@@ -274,6 +275,7 @@ namespace App\Entities{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookState whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookState whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookState whereRememberTotal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookState whereRememberedWordbookTotal($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookState whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookState whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\WordbookState whereWordTotal($value)

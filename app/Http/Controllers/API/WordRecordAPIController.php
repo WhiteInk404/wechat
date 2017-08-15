@@ -31,11 +31,15 @@ class WordRecordAPIController extends AppBaseController
             $wordbook            = Wordbook::whereNotIn('id', $remembered_book_ids)->orderByRaw('`id` asc,`sort` asc')->first();
             // 如果全都背完了。。厉害了。
             if (!$wordbook) {
+                $wordbook_state->remembered_wordbook_total = Wordbook::count();
+                $wordbook_state->save();
+
                 return $this->sendError([], 'over');
             }
-            $wordbook_state->wordbook_id    = $wordbook->id;
-            $wordbook_state->word_total     = $wordbook->contents()->count();
-            $wordbook_state->remember_total = 0;
+            $wordbook_state->wordbook_id               = $wordbook->id;
+            $wordbook_state->word_total                = $wordbook->contents()->count();
+            $wordbook_state->remember_total            = 0;
+            $wordbook_state->remembered_wordbook_total += 1;
             $wordbook_state->save();
             $wordbook_id = $wordbook_state->wordbook_id;
         } else {
