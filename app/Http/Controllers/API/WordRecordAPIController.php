@@ -63,7 +63,9 @@ class WordRecordAPIController extends AppBaseController
 
         // 判断该单词本是否已经背完
         if ($wordbook_state->remember_total == $wordbook_state->word_total) {
-            $wordbook_state->remembered_wordbook_total += 1;
+            $this_total                                = $wordbook_state->remembered_wordbook_total + 1;
+            $word_count                                = Wordbook::count();
+            $wordbook_state->remembered_wordbook_total = $this_total > $word_count ? $word_count : $this_total;
             $wordbook_state->save();
 
             return $this->sendError([], 'next');
