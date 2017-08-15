@@ -69,17 +69,17 @@ class WechatUserAPIController extends AppBaseController
             if ($decrypted_data) {
                 // 填充微信用户信息
                 WechatUser::where('openid', $openid)->update([
-                    'nickname'   => $decrypted_data->get('nickName'),
-                    'gender'     => $decrypted_data->get('gender'),
-                    'city'       => $decrypted_data->get('city'),
-                    'province'   => $decrypted_data->get('province'),
-                    'country'    => $decrypted_data->get('country'),
-                    'avatar_url' => $decrypted_data->get('avatarUrl'),
-                    'union_id'   => $decrypted_data->get('unionId', ''),
+                    'nickname'   => array_get($decrypted_data, 'nickName'),
+                    'gender'     => array_get($decrypted_data, 'gender'),
+                    'city'       => array_get($decrypted_data, 'city'),
+                    'province'   => array_get($decrypted_data, 'province'),
+                    'country'    => array_get($decrypted_data, 'country'),
+                    'avatar_url' => array_get($decrypted_data, 'avatarUrl'),
+                    'union_id'   => array_get($decrypted_data, 'unionId', ''),
                 ]);
 
                 // 修改用户表中对应用户的 name，创建时name 默认值是用户的 openid
-                User::where('name', $openid)->update(['name' => $decrypted_data->get('nickName')]);
+                User::where('name', $openid)->update(['name' => array_get($decrypted_data, 'nickName')]);
             }
         }
 
