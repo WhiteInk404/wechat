@@ -48,7 +48,7 @@ class WordRecordAPIController extends AppBaseController
                 // 并且记得这个单词
                 if ($status == WordRecord::STATUS_REMEMBER) {
                     $this_total                     = $wordbook_state->remember_total + 1;
-                    $wordbook_state->remember_total = $this_total > $wordbook_state->word_total ? $wordbook_state->remember_total : $this_total;
+                    $wordbook_state->remember_total = $this_total > $wordbook_state->word_total ? $wordbook_state->word_total : $this_total;
                     $wordbook_state->save();
                 }
                 // 增加一条记录
@@ -63,6 +63,8 @@ class WordRecordAPIController extends AppBaseController
 
         // 判断该单词本是否已经背完
         if ($wordbook_state->remember_total == $wordbook_state->word_total) {
+            $wordbook_state->remembered_wordbook_total = Wordbook::count();
+
             return $this->sendError([], 'next');
         }
 
@@ -82,6 +84,12 @@ class WordRecordAPIController extends AppBaseController
                 ->whereDoesntHave('wordRecord', function ($sql) {
                     return $sql->where('status', WordRecord::STATUS_REMEMBER);
                 })->first();
+            if (!$word) {
+                Log::info('背过的也没有数据啦，提示去下一本吧', [$word]);
+
+                return $this->sendError([], 'next');
+            }
+
             Log::info('没有数据啦，返回一个背过的', [$word]);
         }
 
