@@ -64,6 +64,7 @@ class WordRecordAPIController extends AppBaseController
         // 判断该单词本是否已经背完
         if ($wordbook_state->remember_total == $wordbook_state->word_total) {
             $wordbook_state->remembered_wordbook_total = Wordbook::count();
+            $wordbook_state->save();
 
             return $this->sendError([], 'next');
         }
@@ -71,8 +72,8 @@ class WordRecordAPIController extends AppBaseController
         // 随机取一条今日未背过的数据
         $word = WordbookContent::whereWordbookId($wordbook_id)
             ->orderBy(DB::raw('RAND()'))
-            ->whereDoesntHave('wordRecord', function ($sql) {
-                return $sql->where('status', WordRecord::STATUS_REMEMBER)->orWhere(function ($sql) {
+            ->whereDoesntHave('wordRecord', function ($sql) use ($user) {
+                return $sql->where('user_id', $user->id)->where('status', WordRecord::STATUS_REMEMBER)->orWhere(function ($sql) {
                     return $sql->where('created_at', '>=', Carbon::today())->where('status', '!=', WordRecord::STATUS_REMEMBER);
                 });
             })->first();
@@ -81,11 +82,11 @@ class WordRecordAPIController extends AppBaseController
         if (!$word) {
             $word = WordbookContent::whereWordbookId($wordbook_id)
                 ->orderBy(DB::raw('RAND()'))
-                ->whereDoesntHave('wordRecord', function ($sql) {
-                    return $sql->where('status', WordRecord::STATUS_REMEMBER);
+                ->whereDoesntHave('wordRecord', function ($sql) use ($user) {
+                    return $sql->where('user_id', $user->id)->where('status', WordRecord::STATUS_REMEMBER);
                 })->first();
             if (!$word) {
-                Log::info('背过的也没有数据啦，提示去下一本吧', [$word]);
+                Log::info('背过的也没有数据啦，提示去下一本吧', ['user' => $user]);
 
                 return $this->sendError([], 'next');
             }
