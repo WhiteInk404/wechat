@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="/frontend/css/support-team.css">
 </head>
 <body style="background:#EFEFF4">
-<div class="p10 fz17 tac white medium yellow-bg">感谢您对本团队的支持！</div>
+@if(session('success'))
+    <div class="p10 fz17 tac white medium yellow-bg">感谢您对本团队的支持！</div>
+@endif
     <img class="w100" src="{{$activity->full_pic_url}}" alt="">
     <div class="container container-info">
         <div class="box">
@@ -32,9 +34,15 @@
             @endif
         </div>
 
+        @if($exists)
         <div class="box share-box">
             <a href="javascript:;" class="btn block share-btn">帮助分享，提升团队人气</a>
         </div>
+        @else
+        <div class="box share-box">
+            <a href="{{ route('team_up',['activity_id'=>$activity->id,'team_id'=>$team->id]) }}" class="btn block join-btn">帮助投票，提升团队人气</a>
+        </div>
+        @endif
     </div>
 
     <div class="share-tip fixed-container fz17 medium white tac">

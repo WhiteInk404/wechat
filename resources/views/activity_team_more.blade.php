@@ -10,8 +10,15 @@
 </head>
 
 <body style="background:#EFEFF4">
+@if($exists)
+<div class="box share-box">
     <a href="javascript:;" class="fz17 block btn share-btn no-radius">帮助分享，提升团队人气 <i class="icon icon-share"></i></a>
-
+</div>
+@else
+<div class="box share-box">
+    <a href="{{ route('team_up',['activity_id'=>$activity->id,'team_id'=>$team->id]) }}" class="fz17 block btn no-radius join-btn">帮助投票，提升团队人气</a>
+</div>
+@endif
     <div class="container-avatars">
         <p class="fz17 color-light">团队全部支持者</p>
         <div class="imgs">
