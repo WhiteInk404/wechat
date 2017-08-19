@@ -141,14 +141,20 @@ EOL;
 
                             return $msg;
                         }
-                    } else {
-                        $msg = <<<EOL
+                    } else { // 也许是查看团队
+                        $team_name = $message->Content;
+                        $team      = Team::whereName($team_name)->first();
+                        if ($team) {
+                            $this->dispatch(new MakeActivityQr($wechat_user, $team->activity, $team));
+                        } else {
+                            $msg = <<<EOL
 你好，$wechat_user->nickname
 如果您需要客服帮助，请添加微信号：
 xuechun_1991
 EOL;
 
-                        return $msg;
+                            return $msg;
+                        }
                     }
 
                     break;
