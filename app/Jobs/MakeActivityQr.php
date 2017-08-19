@@ -52,7 +52,7 @@ class MakeActivityQr implements ShouldQueue
 
         /** @var \EasyWeChat\Staff\Staff $staff */
         $staff  = EasyWeChat::staff();
-        $result = $staff->message($message)->to($this->wechat_user->open_id)->send();
+        $result = $staff->message($message)->to($this->wechat_user->openid)->send();
         \Log::info('make activity qr', ['user' => $this->wechat_user, 'activity' => $this
             ->activity, 'team'                 => $this->team, 'result' => $result, ]);
     }
