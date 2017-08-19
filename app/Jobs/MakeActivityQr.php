@@ -48,7 +48,7 @@ class MakeActivityQr implements ShouldQueue
         /** @var \EasyWeChat\Material\Temporary $temp */
         $temp = EasyWeChat::material_temporary();
         $path = storage_path(uniqid() . '.png');
-        $image->insert(QrCode::format('png')->size(100)->margin(0)->generate($url), 'center')->save($path);
+        $image->insert(QrCode::format('png')->size(300)->margin(0)->generate($url), 'bottom-left', 170, 108)->save($path);
         $result   = $temp->uploadImage($path);
         $media_id = $result->get('media_id');
 

@@ -91,7 +91,7 @@ class DevMock extends Seeder
             'description' => '活动1信息',
             'begin_time'  => Carbon::yesterday(),
             'end_time'    => Carbon::today()->addWeek(),
-            'pic_url'     => 'demo/activity_01.png',
+            'pic_url'     => 'demo/640x1008.jpeg',
         ]);
 
         $teams    = [];
