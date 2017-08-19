@@ -26,13 +26,28 @@ class ServerController extends Controller
                     switch ($message->Event) {
                         case 'subscribe':
                             $wechat_user = $this->getUser($open_id);
-                            $str         = <<<EOL
+                            if (isset($message->EventKey) && strpos($message->EventKey, 'qrscene_') === 0) {
+                                $url = str_replace('qrscene_', '', $message->EventKey);
+                                $str = <<<EOL
+<a href="{$url}">请点击此处支持您的团队。</a>
+EOL;
+
+                                return $str;
+                            }
+                            $str = <<<EOL
 Hi $wechat_user->nickname
 Welcome to WeCee!
 客服微信：xuechun_1991
 EOL;
 
                             return $str;
+                        case 'SCAN':
+                            $msg = <<<EOL
+<a href="{$message->EventKey}">请点击此处支持您的团队。</a>
+EOL;
+
+                            return $msg;
+                            break;
                         default:
                             exit; // 交给机器人吧
                     }
