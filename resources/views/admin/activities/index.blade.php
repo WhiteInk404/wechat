@@ -23,7 +23,6 @@
                 <th>活动名称</th>
                 <th>开始时间</th>
                 <th>结束时间</th>
-                <th>标签</th>
                 <th>参与队伍数量</th>
                 <th>操作</th>
               </tr>
@@ -35,7 +34,6 @@
                   <td>{{ $activity->name }}</td>
                   <td>{{ $activity->begin_time }}</td>
                   <td>{{ $activity->end_time }}</td>
-                  <td>{{ $activity->labels }}</td>
                   <td>{{ $activity->teams()->count() }}</td>
                   <td>
                     <a href="{{ route('admin.activities.show',['id'=>$activity->id]) }}"

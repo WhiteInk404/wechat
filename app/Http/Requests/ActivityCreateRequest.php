@@ -29,8 +29,6 @@ class ActivityCreateRequest extends FormRequest
             'begin_time'  => 'required|date',
             'end_time'    => 'required|date|after:begin_time',
             'pic_url'     => 'required|string',
-            'left_label'  => 'required|string|size:1',
-            'right_label' => 'required|string|size:1',
         ];
     }
 
@@ -40,8 +38,6 @@ class ActivityCreateRequest extends FormRequest
             'begin_time'  => '开始时间',
             'end_time'    => '结束时间',
             'pic_url'     => '海报地址',
-            'left_label'  => '左规则',
-            'right_label' => '右规则',
         ];
     }
 }

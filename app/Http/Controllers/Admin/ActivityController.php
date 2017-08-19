@@ -9,7 +9,6 @@ use App\Http\Requests\ActivityCreateRequest;
 use App\Http\Requests\ActivityUpdateRequest;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\MessageBag;
 use Log;
 
 class ActivityController extends Controller
@@ -42,11 +41,6 @@ class ActivityController extends Controller
         $inputs = array_filter($request->only(['name', 'description', 'begin_time', 'end_time', 'pic_url']), function ($value) {
             return !is_null($value) && $value != '';
         });
-
-        $inputs['labels'] = implode(',', [$request->get('left_label'), $request->get('right_label')]);
-        if (Activity::whereLabels($inputs['labels'])->exists()) {
-            return redirect()->back()->withInput()->withErrors(new MessageBag(['labels' => '活动符号规则已存在']));
-        }
 
         try {
             Activity::create($inputs);

@@ -26,7 +26,6 @@
                 <th>活动名称</th>
                 <th>开始时间</th>
                 <th>结束时间</th>
-                <th>标签</th>
                 <th>海报</th>
               </tr>
               </thead>
@@ -35,7 +34,6 @@
                   <td>{{ $activity->name }}</td>
                   <td>{{ $activity->begin_time }}</td>
                   <td>{{ $activity->end_time }}</td>
-                  <td>{{ $activity->labels }}</td>
                   <td> <img src="{{ $activity->full_pic_url }}" alt=""></td>
                 </tr>
               </tbody>

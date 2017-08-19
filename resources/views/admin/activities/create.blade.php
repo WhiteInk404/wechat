@@ -69,29 +69,6 @@
                   </span>
                 </div>
               </div>
-              <div class="form-group {{ $errors->has('left_label') || $errors->has('right_label') || $errors->has('labels') ? ' has-error' : '' }}">
-                <label class="col-sm-2 control-label">报名符号规则</label>
-                <div class="col-sm-10">
-                  <input type="text" name="left_label" class="" value="{{old('left_label')}}">
-                   团队名
-                  <input type="text" name="right_label" class="" value="{{old('right_label')}}">
-                  @if ($errors->has('left_label'))
-                    <span class="help-block">
-                      {{ $errors->first('left_label') }}
-                    </span>
-                  @endif
-                  @if ($errors->has('right_label'))
-                    <span class="help-block">
-                      {{ $errors->first('right_label') }}
-                    </span>
-                  @endif
-                  @if ($errors->has('labels'))
-                    <span class="help-block">
-                      {{ $errors->first('labels') }}
-                    </span>
-                  @endif
-                </div>
-              </div>
               <div class="form-group {{ $errors->has('description') ? ' has-error' : '' }}">
                 <label class="col-sm-2 control-label">描述</label>
                 <div class="col-sm-10">

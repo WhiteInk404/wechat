@@ -18,15 +18,12 @@ namespace App\Entities{
  * @property string|null $begin_time 活动开始日期
  * @property string|null $end_time 活动结束日期
  * @property string $pic_url 海报
- * @property string $labels 标签规则，英文逗号分隔
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property-read mixed $friendly_begin_time
  * @property-read mixed $friendly_end_time
  * @property-read mixed $full_pic_url
- * @property-read mixed $left_label
- * @property-read mixed $right_label
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Participant[] $participants
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Team[] $teams
  * @property-read \App\User $user
@@ -39,7 +36,6 @@ namespace App\Entities{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Activity whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Activity whereEndTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Activity whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Activity whereLabels($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Activity whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Activity wherePicUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Activity whereUpdatedAt($value)
@@ -269,6 +265,7 @@ namespace App\Entities{
  * @property int $remembered_wordbook_total
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
+ * @property-read mixed $is_over
  * @property-read \App\User $user
  * @property-read \App\Entities\Wordbook $wordbook
  * @property-read \App\Entities\WordbookContent $wordbookContent

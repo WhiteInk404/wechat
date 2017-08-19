@@ -11,25 +11,11 @@ class Activity extends Model
     use SoftDeletes;
 
     protected $fillable = ['name', 'description', 'begin_time', 'end_time', 'pic_url', 'labels'];
-    protected $appends  = ['full_pic_url', 'left_label', 'right_label'];
+    protected $appends  = ['full_pic_url'];
 
     public function getFullPicUrlAttribute()
     {
         return env('QINIU_DOMAIN') . $this->attributes['pic_url'];
-    }
-
-    public function getLeftLabelAttribute()
-    {
-        $labels = explode(',', $this->attributes['labels']);
-
-        return $labels[0];
-    }
-
-    public function getRightLabelAttribute()
-    {
-        $labels = explode(',', $this->attributes['labels']);
-
-        return $labels[1];
     }
 
     public function getFriendlyBeginTimeAttribute()

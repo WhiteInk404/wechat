@@ -19,7 +19,6 @@ class CreateActivitiesTable extends Migration
             $table->timestamp('begin_time')->nullable()->comment('活动开始日期');
             $table->timestamp('end_time')->nullable()->comment('活动结束日期');
             $table->string('pic_url')->comment('海报');
-            $table->string('labels')->unique()->comment('标签规则，英文逗号分隔');
             $table->timestamps();
             $table->softDeletes();
         });
