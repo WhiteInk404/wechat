@@ -58,7 +58,6 @@ EOL;
                     if ($activity) {
                         // 创建团队
                         if (isset($team_name)) {
-                            $team_name = mb_substr($message->Content, 1, -1);
                             $team      = Team::whereName($team_name)->whereActivityId($activity->id)->first();
                             if ($team) {
                                 return '"' . $activity->name . '"活动中团队名 ' . $team_name . ' 已经存在，请换一个';
