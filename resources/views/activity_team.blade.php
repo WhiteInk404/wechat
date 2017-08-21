@@ -10,7 +10,11 @@
 @if(session('success'))
     <div class="p10 fz17 tac white medium yellow-bg">感谢您对本团队的支持！</div>
 @endif
-    <img class="w100" src="/images/team_bg.jpg" alt="">
+    <div class="top_img w100">
+        <img width="55" height="55" src="{{$owner->avatar_url}}" alt="">
+        <p>发起人：{{$owner->nickname}}</p>
+    </div>
+    <!-- <img class="w100" src="/images/team_bg.jpg" alt=""> -->
     <div class="container container-info">
         <div class="box">
             <h2 class="fz17 medium color-medium">活动信息</h2>
@@ -21,12 +25,12 @@
         <div class="box">
             <h2 class="team-name fz15 medium color-medium">团队名称：{{$team->name}}</h2>
             <p class="color-gray">当前共有 {{$team->participants()->count()}} 名支持者</p>
-            <p>当前排名 <span class="number artbrush">{{$sort}}</span></p>
+            <div class="ranking">当前排名 <div class="artbrush number">{{$sort}}</div></div>
             @if(!$team->participants->isEmpty())
             <div class="avatars">
                 <p class="imgs clearfix">
                     @foreach($team->participants()->take(9)->orderBy('id','desc')->get() as $participant)
-                    <img src="{{ $participant->user->wechatUser->avatar_url }}" alt="">
+                    <img width="38" height="38" src="{{ $participant->user->wechatUser->avatar_url }}" alt="">
                     @endforeach
                     <a class="supporter-more" href="{{ route('activity_team_more',['activity_id'=>$activity->id,'team_id'=>$team->id]) }}"><i class="icon icon-more"></i></a>
                 </p>

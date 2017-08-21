@@ -51,6 +51,9 @@ img { max-width: 100%; vertical-align: middle;}
 
 .disabled {background: #88BEF4;}
 
+.top_img {height: 175px !important; font-size: 16px; font-weight: bold; color: #fff; text-shadow: 0px 2px 2px #7B7B7B; background: url(/images/team_bg.jpg); background-size:100% auto; background-position: center -50px; text-align: center;}
+.top_img img {border-radius: 50%; margin-top: 15%; margin-bottom: 8px;}
+
 .icon { display: inline-block; margin-right: 8px; vertical-align: middle; background-repeat: no-repeat; background-size: 100%;}
 .icon-arrow-right { width: 6px; height: 9px; margin-left: 6px; background-image: url(../images/icon-arrow-right.png);}
 .icon-more { width: 30px; height: 30px; background-image: url(../images/icon-more.png);}
@@ -58,11 +61,11 @@ img { max-width: 100%; vertical-align: middle;}
 
 .container-info { margin-top: -10px;}
 .container-info .box { position: relative; margin-top: 10px; padding: 15px 13px; background: #fff;}
-.container-info .box h2 { padding-right: 3em; color: #353535;}
+.container-info .box h2 { color: #353535;}
 .container-info .box .team-name { padding-bottom: 15px; border-bottom: 1px solid #E5E5E5;}
 .container-info .box p { margin-top: 10px;}
-.container-info .number { position: absolute; right: 13px; top: 0; font-size: 26px; text-decoration: underline; color: #FC7D28;}
-.container-info .number span {color: #FC7D28; font-size: 14px; text-decoration: none !important; font-family: 'PingFang SC',-apple-system-font,Helvetica Neue,sans-serif !important; }
+.container-info .ranking { color: #FC7D28; font-weight: bold; font-size: 16px; line-height: 53px; position: absolute; right: 20px; top: 0px;}
+.container-info .number {  font-size: 26px; text-decoration: underline; color: #FC7D28; float: right;line-height: 56px; margin-left: 5px;}
 .container-info .avatars { margin-left: -.8vw;}
 .container-info .avatars .imgs { position: relative; margin-top: 15px;}
 .container-info .avatars img { float: left; width: 9.15%; margin-left: .8vw; border-radius: 2px; box-sizing: border-box;}

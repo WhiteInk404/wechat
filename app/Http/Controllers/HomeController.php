@@ -50,8 +50,10 @@ class HomeController extends Controller
 
     public function activityTeam($activity_id, $team_id)
     {
-        $activity = Activity::find($activity_id);
-        $team     = Team::find($team_id);
+        $activity   = Activity::find($activity_id);
+        $team       = Team::find($team_id);
+        $team_owner = WechatUser::where('user_id', $team->user_id)->first();
+
         if (!$activity || !$team) {
             return '活动信息有误';
         }
@@ -89,7 +91,7 @@ class HomeController extends Controller
 
         $sort = Team::whereActivityId($activity_id)->where('count', '>', $team->count)->count() + 1;
 
-        return view('activity_team')->with(['activity' => $activity->append(['friendly_begin_time', 'friendly_end_time']), 'team' => $team, 'sort' => $sort, 'exists' => $exists]);
+        return view('activity_team')->with(['activity' => $activity->append(['friendly_begin_time', 'friendly_end_time']), 'team' => $team, 'sort' => $sort, 'exists' => $exists, 'owner' => $team_owner]);
     }
 
     public function activityTeamMore($activity_id, $team_id)
