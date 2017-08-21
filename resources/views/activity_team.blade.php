@@ -10,7 +10,7 @@
 @if(session('success'))
     <div class="p10 fz17 tac white medium yellow-bg">感谢您对本团队的支持！</div>
 @endif
-    <img class="w100" src="{{$activity->full_pic_url}}" alt="">
+    <img class="w100" src="/images/team_bg.jpg" alt="">
     <div class="container container-info">
         <div class="box">
             <h2 class="fz17 medium color-medium">活动信息</h2>

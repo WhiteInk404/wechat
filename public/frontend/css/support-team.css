@@ -62,7 +62,7 @@ img { max-width: 100%; vertical-align: middle;}
 .container-info .box .team-name { padding-bottom: 15px; border-bottom: 1px solid #E5E5E5;}
 .container-info .box p { margin-top: 10px;}
 .container-info .number { position: absolute; right: 13px; top: 0; font-size: 26px; text-decoration: underline; color: #FC7D28;}
-.container-info .number i {font-size: 14px; text-decoration: none;}
+.container-info .number i {font-size: 14px; text-decoration: none; font-family: 'PingFang SC',-apple-system-font,Helvetica Neue,sans-serif; }
 .container-info .avatars { margin-left: -.8vw;}
 .container-info .avatars .imgs { position: relative; margin-top: 15px;}
 .container-info .avatars img { float: left; width: 9.15%; margin-left: .8vw; border-radius: 2px; box-sizing: border-box;}
