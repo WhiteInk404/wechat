@@ -49,7 +49,7 @@ img { max-width: 100%; vertical-align: middle;}
 .color-light { color: #888;}
 .color-gray { color: #B2B2B2;}
 
-.disabled {background: #D8D8D8; color: #999999;}
+.disabled {background: #88BEF4;}
 
 .icon { display: inline-block; margin-right: 8px; vertical-align: middle; background-repeat: no-repeat; background-size: 100%;}
 .icon-arrow-right { width: 6px; height: 9px; margin-left: 6px; background-image: url(../images/icon-arrow-right.png);}
