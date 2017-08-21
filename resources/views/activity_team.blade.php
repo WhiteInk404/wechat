@@ -30,7 +30,7 @@
             <div class="avatars">
                 <p class="imgs clearfix">
                     @foreach($team->participants()->take(9)->orderBy('id','desc')->get() as $participant)
-                    <img width="38" height="38" src="{{ $participant->user->wechatUser->avatar_url }}" alt="">
+                    <img width="38" height="30" src="{{ $participant->user->wechatUser->avatar_url }}" alt="">
                     @endforeach
                     <a class="supporter-more" href="{{ route('activity_team_more',['activity_id'=>$activity->id,'team_id'=>$team->id]) }}"><i class="icon icon-more"></i></a>
                 </p>
