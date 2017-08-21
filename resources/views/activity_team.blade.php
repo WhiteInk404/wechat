@@ -21,7 +21,7 @@
         <div class="box">
             <h2 class="team-name fz15 medium color-medium">团队名称：{{$team->name}}</h2>
             <p class="color-gray">当前共有 {{$team->participants()->count()}} 名支持者</p>
-            <p class="number artbrush"><span>当前排名</span> {{$sort}}</p>
+            <p>当前排名 <span class="number artbrush">{{$sort}}</span></p>
             @if(!$team->participants->isEmpty())
             <div class="avatars">
                 <p class="imgs clearfix">
