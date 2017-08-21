@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>支持团队</title>
     <link rel="stylesheet" href="/frontend/css/support-team.css">
-    
+
 </head>
 
 <body style="background:#EFEFF4">
@@ -16,7 +16,7 @@
 </div>
 @else
 <div class="box share-box">
-    <a href="{{ route('team_up',['activity_id'=>$activity->id,'team_id'=>$team->id]) }}" class="fz17 block btn no-radius join-btn">帮助投票，提升团队人气</a>
+    <a href="{{ route('team_up',['activity_id'=>$activity->id,'team_id'=>$team->id]) }}" class="fz17 block btn no-radius join-btn">我要支持</a>
 </div>
 @endif
     <div class="container-avatars">

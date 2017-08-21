@@ -36,11 +36,11 @@
 
         @if($exists)
         <div class="box share-box">
-            <a href="javascript:;" class="btn block share-btn">帮助分享，提升团队人气</a>
+            <a class="btn block share-btn disabled">我要支持</a>
         </div>
         @else
         <div class="box share-box">
-            <a href="{{ route('team_up',['activity_id'=>$activity->id,'team_id'=>$team->id]) }}" class="btn block join-btn">帮助投票，提升团队人气</a>
+            <a href="{{ route('team_up',['activity_id'=>$activity->id,'team_id'=>$team->id]) }}" class="btn block join-btn">我要支持</a>
         </div>
         @endif
     </div>
