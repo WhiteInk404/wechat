@@ -9,3 +9,9 @@ Route::group(['prefix' => 'activities', 'as' => 'activity.'], function () {
     Route::post('remove_pic', 'ActivityController@removePic')->name('remove_pic');
 });
 Route::resource('activities', 'ActivityController');
+
+/* 单词本管理 */
+Route::group(['prefix' => 'wordbook', 'as' => 'wordbook.'], function () {
+    Route::post('upload', 'WordbookController@upload')->name('upload');
+});
+Route::resource('wordbook', 'WordbookController');
