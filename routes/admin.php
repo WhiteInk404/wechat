@@ -13,5 +13,7 @@ Route::resource('activities', 'ActivityController');
 /* 单词本管理 */
 Route::group(['prefix' => 'wordbook', 'as' => 'wordbook.'], function () {
     Route::post('upload', 'WordbookController@upload')->name('upload');
+    Route::get('{id}/contents', 'WordbookController@contents')->name('contents');
+    Route::put('{id}/sort', 'WordbookController@sort')->name('sort');
 });
 Route::resource('wordbook', 'WordbookController');

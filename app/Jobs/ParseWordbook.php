@@ -41,7 +41,7 @@ class ParseWordbook implements ShouldQueue
 
         try {
             DB::beginTransaction();
-            $wordbook = Wordbook::create(['name' => $this->wordbook_name, 'sort' => 99]);
+            $wordbook = Wordbook::create(['name' => $this->wordbook_name]);
 
             $words_arr = [];
             while ($row = fgets($wordbook_resource)) {

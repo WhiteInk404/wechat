@@ -16,7 +16,7 @@ class CreateWordbooksTable extends Migration
         Schema::create('wordbooks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->tinyInteger('sort')->default(0);
+            $table->integer('sort')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
