@@ -97,6 +97,6 @@ class WordRecordAPIController extends AppBaseController
             Log::info('没有数据啦，返回一个背过的', [$word]);
         }
 
-        return $this->sendResponse($word);
+        return $this->sendResponse($word->append('today_words'));
     }
 }

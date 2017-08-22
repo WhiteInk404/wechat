@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class WordbookContent extends Model
@@ -16,5 +17,15 @@ class WordbookContent extends Model
     public function wordRecord()
     {
         return $this->hasMany(WordRecord::class);
+    }
+
+    public function getTodayWordsAttribute()
+    {
+        $user = \Auth::user();
+
+        return WordRecord::whereUserId($user->id)
+            ->whereStatus(WordRecord::STATUS_REMEMBER)
+            ->where('created_at', '>=', Carbon::today())
+            ->count();
     }
 }
