@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>支持团队</title>
+    <title>淘老外</title>
     <link rel="stylesheet" href="/frontend/css/support-team.css">
 </head>
 
