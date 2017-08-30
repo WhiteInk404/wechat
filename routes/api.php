@@ -12,12 +12,11 @@ Route::get('token', function () {
 /** 小程序下个版本才会支持获取 response header. <2017-05-11 10:26:59> */
 Route::group(['middleware' => ['jwt.auth'/*, 'jwt.refresh'*/]], function () {
     Route::group(['middleware' => ['day-sign']], function () {
-        Route::group(['prefix' => 'users'], function () {
-            Route::get('me', 'UserAPIController@me');
-        });
-
         Route::post('word/next', 'WordRecordAPIController@next');
-        Route::post('reminder', 'ReminderAPIController@store');
-        Route::delete('reminder', 'ReminderAPIController@destroy');
     });
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('me', 'UserAPIController@me');
+    });
+    Route::post('reminder', 'ReminderAPIController@store');
+    Route::delete('reminder', 'ReminderAPIController@destroy');
 });
