@@ -50,6 +50,16 @@ class User extends Authenticatable
         return $this->signRecords()->count();
     }
 
+    /**
+     * 签到次数
+     *
+     * @return mixed
+     */
+    public function getReminderQrAttribute()
+    {
+        return 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=' . urlencode(env('WECHAT_QR_TICKET'));
+    }
+
     public function wechatUser()
     {
         return $this->hasOne(WechatUser::class);

@@ -27,10 +27,14 @@ class ServerController extends Controller
                         case 'subscribe':
                             $wechat_user = $this->getUser($open_id);
                             if (isset($message->EventKey) && strpos($message->EventKey, 'qrscene_') === 0) {
-                                $url = str_replace('qrscene_', '', $message->EventKey);
-                                $str = <<<EOL
+                                if ($message->EventKey == 'qrscene_plz_remind_me') {
+                                    $str = '为您设置每日提醒成功。';
+                                } else {
+                                    $url = str_replace('qrscene_', '', $message->EventKey);
+                                    $str = <<<EOL
 <a href="{$url}">请点击此处支持您的团队。</a>
 EOL;
+                                }
 
                                 return $str;
                             }
@@ -42,9 +46,14 @@ EOL;
 
                             return $str;
                         case 'SCAN':
-                            $msg = <<<EOL
+                            $this->getUser($open_id);
+                            if ($message->EventKey == 'qrscene_plz_remind_me') {
+                                $msg = '为您设置每日提醒成功。';
+                            } else {
+                                $msg = <<<EOL
 <a href="{$message->EventKey}">请点击此处支持您的团队。</a>
 EOL;
+                            }
 
                             return $msg;
                             break;
