@@ -47,7 +47,7 @@ EOL;
                             return $str;
                         case 'SCAN':
                             $this->getUser($open_id);
-                            if ($message->EventKey == 'qrscene_plz_remind_me') {
+                            if ($message->EventKey == 'plz_remind_me') {
                                 $msg = '为您设置每日提醒成功。';
                             } else {
                                 $msg = <<<EOL
