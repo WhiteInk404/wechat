@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-
+        \App\Console\Commands\Remind::class,
     ];
 
     /**
@@ -26,8 +26,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // 备份相关
-        $schedule->command('backup:run --only-db')->cron('0 */6 * * * *');
-        $schedule->command('backup:clean')->dailyAt('03:00');
+        //$schedule->command('backup:run --only-db')->cron('0 */6 * * * *');
+        //$schedule->command('backup:clean')->dailyAt('03:00');
+        $schedule->command('wordbook:reminder')->everyMinute();
     }
 
     /**
