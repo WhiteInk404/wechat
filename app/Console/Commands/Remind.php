@@ -24,8 +24,6 @@ class Remind extends Command
      */
     protected $description = '单词本提醒';
 
-    private $template_id = 'MZMyq4Jn_wesptIpurscYeSwRlpZd5ecD_7edghjBpE';
-
     /**
      * Create a new command instance.
      *
@@ -43,35 +41,42 @@ class Remind extends Command
      */
     public function handle()
     {
-        $now_time  = date('H:i');
-        $reminders = Reminder::whereTime($now_time)->get();
+        $now_time  = date('H:i', time());
+        $reminders = Reminder::where('time', $now_time)->get();
         /** @var \EasyWeChat\Notice\Notice $notice */
         $notice = EasyWeChat::notice();
 
+        $this->info('【' . $now_time . '】本次共' . $reminders->count() . '条消息需要发送');
         $reminders->each(function (Reminder $reminder) use ($notice) {
             $user           = $reminder->user;
             $union_id       = $user->wechatUser->union_id;
             $mp_wechat_user = WechatUser::where('user_id', '!=', $user->id)->whereUnionId($union_id)->first();
             $mp_user_openid = $mp_wechat_user->openid;
 
-            $msg_data     = [
+            $msg_data = [
                 'first'    => '大大大大侠，今日背单词时间到了',
                 'keyword1' => $user->wordbookState->wordbook->name, // 学习计划
                 'keyword2' => '已打卡 ' . $user->sign_count . ' 天', // 学习时间
                 'remark'   => '快开始背单词吧',
             ];
-            $msg_response = $notice->send([
+
+            $params = [
                 'touser'      => $mp_user_openid,
-                'template_id' => $this->template_id,
+                'template_id' => env('WECHAT_MP_TMP_ID'),
                 'url'         => '',
-                'miniprogram' => [
-                    'appid'    => config('wechat.mini_program.app_id'),
-                    'pagepath' => 'index',
-                ],
                 'data'        => $msg_data,
-            ]);
+            ];
+
+            if (app()->environment('product')) {
+                $params['miniprogram'] = [
+                    'appid'    => config('wechat.mini_program.app_id'),
+                    'pagepath' => 'pages/index/index',
+                ];
+            }
+            $msg_response = $notice->send($params);
 
             Log::info('$msg_response', ['msg_response' => $msg_response, 'msg_data' => $msg_data]);
         });
+        $this->info('【' . $now_time . '】本次' . $reminders->count() . '条消息发送结束');
     }
 }
