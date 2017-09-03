@@ -25,6 +25,6 @@ class UserAPIController extends AppBaseController
             $user->wordbookState()->save($wordbook_state);
         }
 
-        return $this->sendResponse($user->load(['wordbookState', 'reminder'])->toArray());
+        return $this->sendResponse($user->append(['reminder_qr'])->load(['wordbookState', 'reminder'])->toArray());
     }
 }

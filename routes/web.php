@@ -12,4 +12,15 @@ Route::group(['middleware' => ['wechat.oauth:snsapi_userinfo']], function () {
 
 Route::any('wechat/server', 'ServerController@server');
 
+Route::get('wechat/remind_qr', function () {
+    if (!env('APP_DEBUG')) {
+        return false;
+    }
+    /** @var \EasyWeChat\QRCode\QRCode $qr_code */
+    $qr_code = EasyWeChat::qrcode();
+    $result  = $qr_code->forever('plz_remind_me');
+
+    return $result->ticket;
+});
+
 Auth::routes();
