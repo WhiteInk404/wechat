@@ -64,23 +64,23 @@ class WechatUserAPIController extends AppBaseController
                 return $this->sendError(['exception_msg' => $e->getMessage()], $error_msg);
             }
             DB::commit();
-            // 解密用户详细信息，并修改已保存用户信息
-            $decrypted_data = $this->wechat_app->mini_program->encryptor->decryptData($session_key, $input['iv'], $input['encrypted_data']);
-            if ($decrypted_data) {
-                // 填充微信用户信息
-                WechatUser::where('openid', $openid)->update([
-                    'nickname'   => array_get($decrypted_data, 'nickName'),
-                    'gender'     => array_get($decrypted_data, 'gender'),
-                    'city'       => array_get($decrypted_data, 'city'),
-                    'province'   => array_get($decrypted_data, 'province'),
-                    'country'    => array_get($decrypted_data, 'country'),
-                    'avatar_url' => array_get($decrypted_data, 'avatarUrl'),
-                    'union_id'   => array_get($decrypted_data, 'unionId', ''),
-                ]);
+        }
+        // 解密用户详细信息，并修改已保存用户信息
+        $decrypted_data = $this->wechat_app->mini_program->encryptor->decryptData($session_key, $input['iv'], $input['encrypted_data']);
+        if ($decrypted_data) {
+            // 填充微信用户信息
+            WechatUser::where('openid', $openid)->update([
+                'nickname'   => array_get($decrypted_data, 'nickName'),
+                'gender'     => array_get($decrypted_data, 'gender'),
+                'city'       => array_get($decrypted_data, 'city'),
+                'province'   => array_get($decrypted_data, 'province'),
+                'country'    => array_get($decrypted_data, 'country'),
+                'avatar_url' => array_get($decrypted_data, 'avatarUrl'),
+                'union_id'   => array_get($decrypted_data, 'unionId', ''),
+            ]);
 
-                // 修改用户表中对应用户的 name，创建时name 默认值是用户的 openid
-                User::where('name', $openid)->update(['name' => array_get($decrypted_data, 'nickName')]);
-            }
+            // 修改用户表中对应用户的 name，创建时name 默认值是用户的 openid
+            User::where('name', $openid)->update(['name' => array_get($decrypted_data, 'nickName')]);
         }
 
         $auth_token = JWTAuth::fromUser($wechat_app_user->user);

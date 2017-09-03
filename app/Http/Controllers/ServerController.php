@@ -173,16 +173,21 @@ EOL;
         return $server->serve();
     }
 
+    private function getWechatUserInfo($openid)
+    {
+        /** @var \EasyWeChat\User\User $easywechat_user */
+        $easywechat_user = EasyWeChat::user();
+
+        /** @var \EasyWeChat\Support\Collection $user_info */
+        return $easywechat_user->get($openid);
+    }
+
     private function getUser($open_id)
     {
         $wechat_user = WechatUser::whereOpenid($open_id)->first();
         if (!$wechat_user) {
-            /** @var \EasyWeChat\User\User $easywechat_user */
-            $easywechat_user = EasyWeChat::user();
-            /** @var \EasyWeChat\Support\Collection $user_info */
-            $user_info = $easywechat_user->get($open_id);
-
-            $user = User::create([
+            $user_info = $this->getWechatUserInfo($open_id);
+            $user      = User::create([
                 'name'          => $user_info->get('openid'),
                 'email'         => $user_info->get('openid') . '@example.com',
                 'password'      => bcrypt($user_info->get('password')),
@@ -201,6 +206,20 @@ EOL;
             ));
 
             $wechat_user = $user->wechatUser;
+        } else {
+            if (!$wechat_user->union_id) {
+                $user_info = $this->getWechatUserInfo($open_id);
+
+                $wechat_user->update([
+                    'nickname'   => $user_info->get('nickname'),
+                    'avatar_url' => $user_info->get('headimgurl'),
+                    'gender'     => $user_info->get('sex'),
+                    'city'       => $user_info->get('city'),
+                    'province'   => $user_info->get('province'),
+                    'country'    => $user_info->get('country'),
+                    'union_id'   => $user_info->get('unionid', ''),
+                ]);
+            }
         }
 
         return $wechat_user;
