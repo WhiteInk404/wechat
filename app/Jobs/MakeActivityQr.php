@@ -41,14 +41,10 @@ class MakeActivityQr implements ShouldQueue
         $img_url  = $this->activity->full_pic_url;
         $image    = Image::make($img_url);
 
-        /** @var \EasyWeChat\QRCode\QRCode $qr_code */
-        $qr_code = EasyWeChat::qrcode();
-        $result  = $qr_code->temporary($team_url, 30 * 24 * 60 * 60);
-        $url     = $result->url;
         /** @var \EasyWeChat\Material\Temporary $temp */
         $temp = EasyWeChat::material_temporary();
         $path = storage_path(uniqid() . '.png');
-        $image->insert(QrCode::format('png')->size(300)->margin(0)->generate($url), 'bottom-left', 170, 108)->save($path);
+        $image->insert(QrCode::format('png')->size(300)->margin(0)->generate($team_url), 'bottom-left', 170, 108)->save($path);
         $result   = $temp->uploadImage($path);
         $media_id = $result->get('media_id');
 
