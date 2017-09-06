@@ -5,10 +5,13 @@ namespace App\Jobs;
 use App\Entities\Wordbook;
 use App\Entities\WordbookContent;
 use DB;
+use Excel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Maatwebsite\Excel\Collections\CellCollection;
+use Maatwebsite\Excel\Readers\LaravelExcelReader;
 use Storage;
 
 class ParseWordbook implements ShouldQueue
@@ -36,42 +39,40 @@ class ParseWordbook implements ShouldQueue
      */
     public function handle()
     {
-        $storage           = Storage::getDriver();
-        $wordbook_resource = $storage->readStream($this->path);
-
         try {
-            DB::beginTransaction();
-            $wordbook = Wordbook::create(['name' => $this->wordbook_name]);
+            $file_path = storage_path('app/' . $this->path);
+            Excel::load($file_path, function (LaravelExcelReader $reader) {
+                DB::beginTransaction();
+                $wordbook  = Wordbook::create(['name' => $this->wordbook_name]);
+                $words_arr = [];
+                $reader->noHeading()->each(function (CellCollection $row) use (&$words_arr) {
+                    if ($row->get(0) && $row->get(1)) {
+                        $words_arr[] = new WordbookContent([
+                            'facade' => $row->get(0),
+                            'back'   => $this->insertEnter($row->get(1)),
+                        ]);
+                    }
+                });
 
-            $words_arr = [];
-            while ($row = fgets($wordbook_resource)) {
-                preg_match('/(\w+)(.*)/', $row, $matches);
-                if (count($matches) != 3) {
-                    continue;
-                }
-
-                $words_arr[] = new WordbookContent([
-                    'facade' => $matches[1],
-                    'back'   => trim($matches[2]),
-                ]);
-
-                if (count($words_arr) === 1000) {
-                    $wordbook->contents()->saveMany($words_arr);
-                    unset($words_arr);
-                }
-            }
-
-            if (count($words_arr) > 0) {
                 $wordbook->contents()->saveMany($words_arr);
-                unset($words_arr);
-            }
-
-            DB::commit();
-            \Log::info('parse wordbook success', ['wordbook' => $wordbook]);
-            $storage->delete($this->path);
+                DB::commit();
+                \Log::info('parse wordbook success', ['wordbook' => $wordbook]);
+            });
+            Storage::delete($this->path);
         } catch (\Exception $exception) {
             DB::rollBack();
             \Log::info('parse wordbook error.', ['file_path' => $this->path, 'exception' => $exception]);
         }
+    }
+
+    public function insertEnter($string)
+    {
+        $searches = ['n.', 'v.', 'pron.', 'adj.', 'a.', 'adv.', 'ad.', 'num.', 'art.', 'prep.', 'conj.',
+                     'interj.', 'int.', 'vi.', 'vt.', 'u.', 'c.', 'cn.', 'pl.', 'abbr.', 'aux.', 'pers.', ];
+        $replaces = ['<br>n.', '<br>v.', '<br>pron.', '<br>adj.', '<br>a.', '<br>adv.', '<br>ad.', '<br>num.', '<br>art.', '<br>prep.', '<br>conj.',
+                     '<br>interj.', '<br>int.', '<br>vi.', '<br>vt.', '<br>u.', '<br>c.', '<br>cn.', '<br>pl.', '<br>abbr.', '<br>aux.', '<br>pers.', ];
+        $result   = str_replace($searches, $replaces, $string);
+
+        return $result;
     }
 }

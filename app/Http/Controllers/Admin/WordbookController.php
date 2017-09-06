@@ -80,7 +80,7 @@ class WordbookController extends Controller
             $upload_path   = $file->store('wordbook_path');
             flash('上传成功，服务器可能需要花点时间来处理它，请稍候。', 'success');
 
-            $this->dispatch(new ParseWordbook($wordbook_name, $upload_path));
+            $this->dispatch(new ParseWordbook(pathinfo($wordbook_name)['filename'], $upload_path));
 
             return redirect()->back();
         } catch (Exception $exception) {
