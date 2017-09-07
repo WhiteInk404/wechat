@@ -67,11 +67,12 @@ class ParseWordbook implements ShouldQueue
 
     public function insertEnter($string)
     {
-        $searches = ['n.', 'v.', 'pron.', 'adj.', 'a.', 'adv.', 'ad.', 'num.', 'art.', 'prep.', 'conj.',
-                     'interj.', 'int.', 'vi.', 'vt.', 'u.', 'c.', 'cn.', 'pl.', 'abbr.', 'aux.', 'pers.', ];
-        $replaces = ['<br>n.', '<br>v.', '<br>pron.', '<br>adj.', '<br>a.', '<br>adv.', '<br>ad.', '<br>num.', '<br>art.', '<br>prep.', '<br>conj.',
-                     '<br>interj.', '<br>int.', '<br>vi.', '<br>vt.', '<br>u.', '<br>c.', '<br>cn.', '<br>pl.', '<br>abbr.', '<br>aux.', '<br>pers.', ];
-        $result   = str_replace($searches, $replaces, $string);
+        $searches = ['/\bpron\b\./', '/\badj\b\./', '/\badv\b\./', '/\bad\b\./', '/\bnum\b\./', '/\bart\b\./', '/\bprep\b\./', '/\bconj\b\./',
+                     '/\binterj\b\./', '/\babbr\b\./', '/\baux\b\./', '/\bpers\b\./', '/\bint\b\./', '/\bpl\b\./', '/\bvi\b\./', '/\bvt\b\./', '/\bu\b\./', '/\bc\b\./', '/\bcn\b\./', '/\bn\b\./', '/\bv\b\./', '/\ba\b\./', ];
+        $replaces = ['<br>pron.', '<br>adj.', '<br>adv.', '<br>ad.', '<br>num.', '<br>art.', '<br>prep.', '<br>conj.',
+                     '<br>interj.', '<br>abbr.', '<br>aux.', '<br>pers.', '<br>int.', '<br>pl.', '<br>vi.', '<br>vt.', '<br>u.', '<br>c.', '<br>cn.', '<br>n.', '<br>v.', '<br>a.', ];
+
+        $result = preg_replace($searches, $replaces, $string);
 
         return $result;
     }
