@@ -82,7 +82,7 @@ class HomeController extends Controller
                 'city'       => $oauth_user->getOriginal()['city'],
                 'province'   => $oauth_user->getOriginal()['province'],
                 'country'    => $oauth_user->getOriginal()['country'],
-                'union_id'   => '', // todo
+                'union_id'   => $oauth_user->getOriginal()['unionid'],
             ]);
             $user->wechatUser()->save($wechat_user);
         }
