@@ -20,3 +20,6 @@ Route::group(['middleware' => ['jwt.auth'/*, 'jwt.refresh'*/]], function () {
     Route::post('reminder', 'ReminderAPIController@store');
     Route::delete('reminder', 'ReminderAPIController@destroy');
 });
+
+Route::any('wechat/callback', 'WeChat\IndexController@handle')->name('wechat.callback');
+Route::get('wechat/oauth', 'WeChat\Oauth2Controller@handle')->name('wechat.oauth');

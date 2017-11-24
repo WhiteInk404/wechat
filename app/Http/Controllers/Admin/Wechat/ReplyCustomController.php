@@ -25,7 +25,7 @@ class ReplyCustomController extends BaseController
     public function create(Request $request)
     {
         $data['actionType'] = 'custom';
-        $data['actionUrl'] = '/admin/wx/reply/custom';
+        $data['actionUrl'] = '/admin/wechat/reply/custom';
         $data['reply'] = '';
         return view('admin.wechat.wx_subscribe_index', $data);
     }
@@ -36,7 +36,7 @@ class ReplyCustomController extends BaseController
             ->where('type', ReplyRule::TYPE_CUSTOM)
             ->first();
         $data['actionType'] = 'custom';
-        $data['actionUrl'] = '/company/wx/reply/custom';
+        $data['actionUrl'] = '/admin/wechat/reply/custom';
         $data['reply'] = $reply;
         return view('admin.wechat.wx_subscribe_index', $data);
     }

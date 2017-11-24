@@ -1,0 +1,12 @@
+/**
+ * 后台样式
+ */
+.box-header .row .left{
+    width:30%;
+    float: left;
+}
+.box-header .row .right{
+    width:70%;
+    float: left;
+    padding-right: 3%;
+}

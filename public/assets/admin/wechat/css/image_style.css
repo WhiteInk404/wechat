@@ -1,0 +1,60 @@
+.text-overflow {width: auto;  overflow: hidden;  text-overflow: ellipsis;  white-space: nowrap;  word-wrap: normal;  font-weight: 400;  font-style: normal;}
+.header #top_menu li{
+
+    text-align: center;
+}
+.header #top_menu{
+    margin-top: 0px;
+}
+.header #top_menu li a{
+    padding: 19px 15px;
+    margin: 0px;
+    border: none;
+    display: inline-block;
+}
+.header #top_menu li:hover{
+    background: #FF6C60;
+}
+.header #top_menu li a:hover{
+    color: #fff;
+    background: none;
+}
+#top_menu .navActive{
+    background: #FF6C60;
+    color: #fff;
+}
+.modal-content,.modal-dialog {
+    width: 980px;
+}
+@media screen and (max-width: 1400px) {
+    .modal-content,.modal-dialog {width: 780px;}
+}
+.form-group label {
+     padding-right: 10px;
+}
+.form-group input {
+     margin-right: 16px;
+}
+.fa.fa-circle{
+    font-size: 9px;
+}
+.glyphicon.glyphicon-remove-sign {
+    font-size: smaller;
+    color: #FF5500;
+}
+.glyphicon.glyphicon-ok-sign {
+    font-size: smaller;
+    color: #87D068;
+}
+.product-id, .shop-id {
+    width: 58px;
+}
+.table.table-striped.table-bordered.table-condensed.table-hover.dataTable .shop-goods-tr th {
+    text-align: center;
+}
+.gradeA .Keep-Right{
+    text-align: right;
+}
+.gradeA .Centered {
+    text-align: center;
+}

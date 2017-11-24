@@ -16,14 +16,14 @@ class ReplyNomatchController extends BaseController
 {
     public function __construct()
     {
-        parent::__construct();
+        //parent::__construct();
         $this->client = Session::get('client_info');
     }
 
     public function index(Request $request)
     {
         $data['actionType'] = 'nomatch';
-        $data['actionUrl'] = '/admin/wx/reply/nomatch';
+        $data['actionUrl'] = '/admin/wechat/reply/nomatch';
         $reply = ReplyRule::where('keyword', ReplyRule::KEYWORD_NOMATCH)
             ->where('type', ReplyRule::TYPE_BUILDIN)
             ->first();

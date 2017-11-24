@@ -18,7 +18,7 @@ class ReplySubscribeController extends BaseController
     public function index(Request $request)
     {
         $data['actionType'] = 'subscribe';
-        $data['actionUrl'] = '/admin/wx/reply/subscribe';
+        $data['actionUrl'] = '/admin/wechat/reply/subscribe';
         $reply = ReplyRule::where('keyword', ReplyRule::KEYWORD_SUBSCRIBE)
             ->where('type', ReplyRule::TYPE_BUILDIN)
             ->first();
