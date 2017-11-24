@@ -26,6 +26,11 @@ class WxMenu extends Model
      */
     const TYPE_CONDITIONAL = 2;
 
+    /**
+     * 代码自定义菜单
+     */
+    const TYPE_CODE = 100;
+
     protected $casts = [
         'button' => 'object',
         'matchrule' => 'object'

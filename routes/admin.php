@@ -23,7 +23,7 @@ Route::group(['as' => 'wechat.', 'namespace' => '\Wechat', 'prefix' => 'wechat']
     Route::get('wx/config/edit', 'AccountController@create')->name('wxConfig.edit');
     Route::post('wx/config/store', 'AccountController@store')->name('wxConfig.store');
 
-    Route::get('reply/subscribe', 'ReplySubscribeController@index')->name('subscribe.index');
+    /*Route::get('reply/subscribe', 'ReplySubscribeController@index')->name('subscribe.index');
     Route::post('reply/subscribe', 'ReplySubscribeController@store')->name('subscribe.store');
     Route::resource('reply/nomatch', 'ReplyNomatchController');
     Route::resource('reply/custom', 'ReplyCustomController');
@@ -44,5 +44,8 @@ Route::group(['as' => 'wechat.', 'namespace' => '\Wechat', 'prefix' => 'wechat']
     Route::any('media/news/image/upload/ue', 'MediaNewsController@uploadByUE');
     Route::post('media/news/image/choose', 'MediaNewsController@imageChoose');
     Route::post('media/image/list', 'MediaImageController@getList');
-    Route::post('media/news/list', 'MediaNewsController@getList');
+    Route::post('media/news/list', 'MediaNewsController@getList');*/
+
+    Route::get('wx/menu', 'WxMenuController@Index')->name('wxMenu.index');
+    Route::post('wx/menu', 'WxMenuController@store')->name('wxMenu.store');
 });
