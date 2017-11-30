@@ -22,8 +22,10 @@ class ServerController extends Controller
             $open_id = $message->FromUserName;
             Log::info('wechat server message', [$message]);
             switch ($message->MsgType) {
+                //1.处理事件类型消息
                 case 'event':
                     switch ($message->Event) {
+                        //1.1 处理订阅事件类型消息
                         case 'subscribe':
                             $wechat_user = $this->getUser($open_id);
                             if (isset($message->EventKey) && strpos($message->EventKey, 'qrscene_') === 0) {
@@ -45,6 +47,7 @@ Welcome to WeCee!
 EOL;
 
                             return $str;
+                        //1.2 处理扫描事件类型消息
                         case 'SCAN':
                             $this->getUser($open_id);
                             if ($message->EventKey == 'plz_remind_me') {
@@ -61,36 +64,68 @@ EOL;
                             exit; // 交给机器人吧
                     }
                     break;
-
+                //2.处理文本类型消息
+                //
                 case 'text':
+                //预先设置两个变量 $activity、$team_name 的值为 NULL，另外 $activity_name 默认不存在
+                //用设置好的正则表达式匹配用户的TEXT文本信息
+                //    匹配结果只有两种：
+                //          1. count($matches)==0，不可能是新建队伍；
+                //          2. count($matches)==3，可能是新建队伍。
+                //下面再通过 $activity、$team_name 值的变化处理用户请求
                     $wechat_user = $this->getUser($open_id);
                     $activity    = '';
                     $team_name   = '';
                     preg_match('/(.*)#(.*)#/', $message->Content, $matches);
-
+                    //关键词中有两个#的才满足正则匹配，count($matches)==3，否则count($matches)==0，对于count($matches)==3的情况，也即关键词中有2个#，有如下4中情况：
+                    //  1#1#  1#0#  0#1#  0#0#，下面将会分别进行判断
                     if (count($matches) > 2) {
+                      //count($matches)==3 的情况，也即关键词中有2个#
                         if (isset($matches[1]) && !empty($matches[1]) && isset($matches[2]) && !empty($matches[2])) {
+                            //1#1#，用户的目的是，按照活动说明新建团队
+                            //这种情况下，$activity、$team_name 的值由最初的 NULL 变成非 NULL
                             $team_name     = $matches[1];
                             $activity_name = $matches[2];
-
+                            //判断$activity_name是否存在于Activity表中
+                            //如果存在，说明该用户参与的活动存在且没过期，如果不存在，说明该活动不存在或已过期
                             $activity = Activity::whereName($activity_name)->first();
                         }
+                        //后三种情况：1#0#  0#1#  0#0#
+                        //此处不做处理
                     } else {
+                        //count($matches)==0 的情况，这种情况下用户不是新建团队，但是有可能是查询团队情况，或者，获取团队海报，如果这两者都不是，那么可以确定这个关键词和海报活动无关
+
+                        //判断用户的关键词$message->Content是否存在于Activity表中，即判断是否在查询团队情况
                         $activity = Activity::whereName($message->Content)->first();
                     }
+                    //经过上面的判断 $activity、$team_name、$activity_name 的状态和值发生了变化
+                    //⚠️注意：只有1#1#这种情况下，$team_name、$activity_name 才有意义
 
                     if ($activity) {
-                        // 创建团队
+                        //Activity表中查询到了，说明用户的关键词中包含或者就是有效的活动名
                         if ($team_name) {
+                        //如果$team_name也存在，说明是1#1#的情况，该情况是用户要新创建团队
+                            //查询团队名是否已存在
                             $team = Team::whereName($team_name)->whereActivityId($activity->id)->first();
+
+                            //该团队名已存在
                             if ($team) {
+                                //🍉提示用户更换团队名
                                 return '"' . $activity->name . '"活动中团队名 ' . $team_name . ' 已经存在，请换一个';
                             }
 
+                            //该团队名不存在
+                            //判断该用户在此活动中是否已经创建过团队
                             $team = Team::whereUserId($wechat_user->user_id)->whereActivityId($activity->id)->first();
+
+                            //已经有团队
                             if ($team) {
+                                //🍉提示用户已创建过团队，不能再创建了
                                 return '您在"' . $activity->name . '"活动中已经创建过团队 ' . $team->name . ' 了';
                             }
+
+                            //没有创建过，且团队名可以使用
+                            //🍉创建团队，并提示用户团队创建成功
                             $team = Team::create([
                                 'activity_id' => $activity->id,
                                 'name'        => $team_name,
@@ -109,10 +144,14 @@ EOL;
                             $this->dispatch(new MakeActivityQr($wechat_user, $activity, $team));
 
                             return $msg;
-                        } else { // 查看支持或创建团队方式
+
+                        } else {
+                          //$team_name不存在，不过，$activity==1，说明用户不有可能是查询团队情况
+                            //根据活动名和用户id在Team（创建）表中查询
                             $team = Team::whereActivityId($activity->id)->whereUserId($wechat_user->user_id)->first();
 
                             // 有创建
+                            //🍉返回团队排名情况
                             if ($team) {
                                 $sort = Team::whereActivityId($activity->id)->where('count', '>', $team->count)->count() + 1;
                                 $msg  = <<<EOL
@@ -126,8 +165,11 @@ EOL;
 发送团队名称即可获取该团队海报。
 EOL;
                             } else {
+                                //没有创建
+                                //再查询是否有支持的团队
                                 $participant = Participant::whereActivityId($activity->id)->whereUserId($wechat_user->user_id)->first();
                                 // 有支持
+                                //🍉返回支持团队的排名情况
                                 if ($participant) {
                                     $sort = Team::whereActivityId($activity->id)->where('count', '>', $participant->team->count)->count() + 1;
                                     $msg  = <<<EOL
@@ -137,12 +179,14 @@ EOL;
 团队名称：{$participant->team->name}
 支持人数：{$participant->team->count}
 当前排名：$sort
-您也可以创建自己的团队，赢取活动资格。回复团队名称+#{$activity->name}#，如：南京大学自2班#中秋免费游#，即可创建自己的团队。
+您也可以创建自己的团队，赢取活动资格。回复团队名称+#{$activity->name}#，如：南京大学自2班#{$activity->name}#，即可创建自己的团队。
 活动详情请点击 www.wecee.com 查看。
 EOL;
-                                } else { // 无支持
+                                } else {
+                                  //没有创建且没有支持
+                                  //🍉提示用户没有参加该活动
                                     $msg = <<<EOL
-感谢您参与“{$activity->name}”活动，目前您还没有创建自己的团队，回复团队名称+#{$activity->name}#，如：南京大学自2班#中秋免费游#，即可创建自己的团队。
+感谢您参与“{$activity->name}”活动，目前您还没有创建自己的团队，回复团队名称+#{$activity->name}#，如：南京大学自2班#{$activity->name}#，即可创建自己的团队。
 活动详情请点击 www.wecee.com 查看。
 EOL;
                                 }
@@ -150,17 +194,35 @@ EOL;
 
                             return $msg;
                         }
-                    } else { // 也许是查看团队
+                    } else {
+                    //$activity 为 NULL
+                    //如果与活动有关的话，只可能是通过团队名获取团队海报
                         $team_name = $message->Content;
+                        //查询该团队存不存在
                         $team      = Team::whereName($team_name)->first();
                         if ($team) {
+                            //存在该团队
+                            //🍉返回团队海报
                             $this->dispatch(new MakeActivityQr($wechat_user, $team->activity, $team));
                         } else {
-                            $msg = <<<EOL
-你好，$wechat_user->nickname
-如果您需要客服帮助，请添加微信号：
-xuechun_1991
+                            //不存在该团队
+                            //🚩普通关键词回复
+                            if ($message->Content=='7000') {
+                                $msg = <<<EOL
+链接: https://pan.baidu.com/s/1jIl4nMu
+密码: xfqf
 EOL;
+                            }elseif ($message->Content=='十六字训练秘诀') {
+                              $msg = '十六字训练秘诀'
+                            }elseif ($message->Content=='移植') {
+                              $msg = <<<EOL
+链接: https://pan.baidu.com/s/1slmK5uH
+密码: w852
+EOL;
+                            }else {
+                              //机器人聊天
+                            }
+
 
                             return $msg;
                         }
