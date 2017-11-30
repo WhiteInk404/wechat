@@ -17,6 +17,7 @@ class ServerController extends Controller
     {
         /** @var \EasyWeChat\Server\Guard $server */
         $server = EasyWeChat::server();
+        $staff = EasyWeChat::staff();
 
         $server->setMessageHandler(function ($message) {
             $open_id = $message->FromUserName;
@@ -207,7 +208,7 @@ EOL;
                         } else {
                             //不存在该团队
                             //🚩普通关键词回复
-                            $staff = EasyWeChat::staff();
+
 
                             if ($message->Content=='7000') {
                                 $msg = <<<EOL
@@ -218,7 +219,7 @@ EOL;
                               //新建消息内容
                                 $newMessage = new EasyWeChat\Message\Text(['content' => '如果有疑问，请添加客服微信：xuechun_1991咨询。']);
                               //用客服接口发送消息给用户
-                                $result = $staff->message($newMassage)->to($wechat_user->openId)->send();
+                                $result = $staff->message($newMassage)->to($open_id)->send();
                             }elseif ($message->Content=='十六字训练秘诀') {
                               $msg = '十六字训练秘诀';
                             }elseif ($message->Content=='移植') {
