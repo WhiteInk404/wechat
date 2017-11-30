@@ -226,6 +226,7 @@ Hi $wechat_user->nickname
 Welcome to WeCee!
 客服微信：xuechun_1991
 EOL;
+                            }
 
 
                             return $msg;
