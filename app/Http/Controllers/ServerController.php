@@ -213,7 +213,7 @@ EOL;
 密码: xfqf
 EOL;
                             }elseif ($message->Content=='十六字训练秘诀') {
-                              $msg = '十六字训练秘诀'
+                              $msg = '十六字训练秘诀';
                             }elseif ($message->Content=='移植') {
                               $msg = <<<EOL
 链接: https://pan.baidu.com/s/1slmK5uH
@@ -221,6 +221,7 @@ EOL;
 EOL;
                             }else {
                               //机器人聊天
+                              
                             }
 
 
