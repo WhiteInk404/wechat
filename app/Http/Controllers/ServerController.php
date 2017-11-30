@@ -207,11 +207,17 @@ EOL;
                         } else {
                             //不存在该团队
                             //🚩普通关键词回复
+                            $staff = EasyWeChat::staff();
                             if ($message->Content=='7000') {
                                 $msg = <<<EOL
 链接: https://pan.baidu.com/s/1jIl4nMu
 密码: xfqf
 EOL;
+                            //用客服消息发送第二条消息
+                              //新建消息内容
+                                $newMessage = new EasyWeChat\Message\Text(['content' => '如果有疑问，请添加客服微信：xuechun_1991咨询。']);
+                              //用客服接口发送消息给用户
+                                $result = $staff->message($newMassage)->to($openId)->send();
                             }elseif ($message->Content=='十六字训练秘诀') {
                               $msg = '十六字训练秘诀';
                             }elseif ($message->Content=='移植') {
