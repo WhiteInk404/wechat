@@ -221,8 +221,11 @@ EOL;
 EOL;
                             }else {
                               //机器人聊天
-                              $msg = '';
-                            }
+                              $msg = <<<EOL
+Hi $wechat_user->nickname
+Welcome to WeCee!
+客服微信：xuechun_1991
+EOL;
 
 
                             return $msg;
