@@ -218,8 +218,10 @@ EOL;
                             //用客服消息发送第二条消息
                               //新建消息内容
                                 $newMessage = new EasyWeChat\Message\Text(['content' => '如果有疑问，请添加客服微信：xuechun_1991咨询。']);
+
                               //用客服接口发送消息给用户
-                                $result = $staff->message($newMassage)->to($open_id)->send();
+                                $result = $staff->message($newMessage)->to($open_id)->send();
+
                             }elseif ($message->Content=='十六字训练秘诀') {
                               $msg = '十六字训练秘诀';
                             }elseif ($message->Content=='移植') {
