@@ -209,14 +209,13 @@ EOL;
                             //不存在该团队
                             //🚩普通关键词回复
 
-
                             if ($message->Content=='7000') {
                                 $msg = <<<EOL
 链接: https://pan.baidu.com/s/1jIl4nMu
 密码: xfqf
 EOL;
                             //用客服消息发送第二条消息
-                            $this->dispatch(new SendStaffMessage($wechat_user,$message->Content));
+//                            $this->dispatch(new SendStaffMessage($wechat_user,$message->Content));
 
                             }elseif ($message->Content=='十六字训练秘诀') {
                               $msg = '十六字训练秘诀';
