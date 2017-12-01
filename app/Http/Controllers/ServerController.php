@@ -216,7 +216,7 @@ EOL;
 //                            $flag = $message->Content;
                             //用客服消息发送第二条消息
                             $this->dispatch(new SendStaffMessage($wechat_user));
-
+                            return $msg;
                             }elseif ($message->Content=='十六字训练秘诀') {
                               $msg = '十六字训练秘诀';
 
