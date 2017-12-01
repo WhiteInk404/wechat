@@ -8,22 +8,23 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use EasyWeChat;
 
+
 class SendStaffMessage implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
     private $wechat_user;
-    private $message->Content;
+//    private $message->Content;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($wechat_user)
     {
         $this->wechat_user = $wechat_user;
-        $this->$message->Content = $message->Content;
+//        $this->$message->Content = $message->Content;
     }
 
     /**
@@ -33,14 +34,14 @@ class SendStaffMessage implements ShouldQueue
      */
     public function handle()
     {
-      if ($this->$message->Content=='7000') {
+      if ($message->Content == '7000') {
 
-          /** 新建文本消息$new_message*/
-          $new_message = new EasyWeChat\Message\Text(['content' => '如果有疑问，请添加客服微信：xuechun_1991咨询。']);
+          /** 新建文本消息 */
+          $message = new EasyWeChat\Message\Text(['content' => '如果有疑问，请添加客服微信：xuechun_1991咨询。']);
 
           /** @var \EasyWeChat\Staff\Staff $staff */
           $staff  = EasyWeChat::staff();
-          $result = $staff->message($new_message)->to($this->wechat_user->openid)->send();
+          $result = $staff->message($message)->to($this->wechat_user->openid)->send();
       }
     }
 }

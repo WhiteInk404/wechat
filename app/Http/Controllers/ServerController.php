@@ -17,7 +17,6 @@ class ServerController extends Controller
     {
         /** @var \EasyWeChat\Server\Guard $server */
         $server = EasyWeChat::server();
-        $staff = EasyWeChat::staff();
 
         $server->setMessageHandler(function ($message) {
             $open_id = $message->FromUserName;
