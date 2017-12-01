@@ -213,7 +213,7 @@ EOL;
 链接: https://pan.baidu.com/s/1jIl4nMu
 密码: xfqf
 EOL;
-//                            $flag = $message->Content;
+                            $flag = $message->Content;
                             //用客服消息发送第二条消息
                             $this->dispatch(new SendStaffMessage($wechat_user));
 

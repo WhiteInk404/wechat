@@ -14,6 +14,7 @@ class SendStaffMessage implements ShouldQueue
     use InteractsWithQueue, Queueable, SerializesModels;
 
     private $wechat_user;
+    private $flag;
 //    private $message->Content;
 
     /**
@@ -21,9 +22,10 @@ class SendStaffMessage implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($wechat_user)
+    public function __construct($wechat_user, $flag)
     {
         $this->wechat_user = $wechat_user;
+        $this->$flag = $flag;
 //        $this->$message->Content = $message->Content;
     }
 
@@ -34,7 +36,7 @@ class SendStaffMessage implements ShouldQueue
      */
     public function handle()
     {
-      if ($message->Content == '7000') {
+      if ($this->$flag == '7000') {
 
           /** 新建文本消息 */
           $message = new EasyWeChat\Message\Text(['content' => '如果有疑问，请添加客服微信：xuechun_1991咨询。']);
