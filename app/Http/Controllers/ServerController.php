@@ -216,7 +216,10 @@ EOL;
 EOL;
 //                            $flag = $message->Content;
                             //用客服消息发送第二条消息
-                            $this->dispatch(new SendStaffMessage($wechat_user));
+                        //    $this->dispatch(new SendStaffMessage($wechat_user));
+                        $team_name = '淘老外'；
+                        $team      = Team::whereName($team_name)->first();
+                        $this->dispatch(new MakeActivityQr($wechat_user, $team->activity, $team));
 
                             }elseif ($message->Content=='十六字训练秘诀') {
                               $msg = '十六字训练秘诀';
